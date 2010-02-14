@@ -1,4 +1,6 @@
-Silk. Seems to work but need to do a lot of testing yet.
+Silk for Sinatra. 
+
+Seems to work but need to do a lot of testing yet.
 
 To try out, download and put in /lib in your app. Then in your config.ru do something like:
 
