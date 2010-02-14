@@ -11,7 +11,7 @@ app = Rack::Builder.new {
   end
 
   map '/' do
-    run TugarAPI::App
+    run MyApp
   end
 }
 
