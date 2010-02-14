@@ -33,7 +33,6 @@ module Silk
 
 		get '' do
 			redirect '/' + @models.first.pluralize
-			# erb :root
 		end
 
 		get '/search*' do
