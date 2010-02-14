@@ -1,0 +1,10 @@
+vendor/
+*~
+
+# appcfg.rb 
+.gems/
+bin/
+public/favicon.ico
+public/robots.txt
+*.backup
+*.test

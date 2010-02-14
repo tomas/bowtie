@@ -1,0 +1,9 @@
+<ul class="subnav">
+	<% @subtypes.each do |subtype| %>
+		<% subtype.each do |k, vals| %>
+		<% vals.each do |v| %>
+		<li class="<%= 'current' if params[k] and params[k] == v %>"><a href="<%= model_path %>?<%= k %>=<%= v %>"><%= k %>::<%= v %></a></li>
+		<% end %>
+		<% end %>
+	<% end %>
+</ul>

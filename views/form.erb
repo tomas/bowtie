@@ -1,0 +1,20 @@
+<form method="post" action="<%= model_path %><%= '/' + @resource.id.to_s if @resource.id %>">
+<%= '<input type="hidden" name="_method" value="put">' if @resource.id %>
+
+<%= partial(:errors) %>
+
+<table>
+	<% @resource.properties_to_serialize('all').each do |p| %>
+	<% unless [:created_at, :id].include?(p.name) %>
+	<% @p = p %>
+	<tr>
+		<td><%= p.name.to_s.titleize %></td>
+		<td><%= partial(:field) %></td>
+	</tr>
+	<% end %>
+	<% end %>
+</table>
+
+<input type="submit" value="Submit" />
+
+</form>

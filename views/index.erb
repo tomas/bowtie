@@ -1,0 +1,19 @@
+<%= partial(:subtypes) if !params[:association] and @subtypes.any? %>
+
+<%= partial(:search) %>
+
+<h1><%= @resources.pager.total %> <%= @title || @model.name.pluralize %> <a href="<%= model_path %>/new">(new)</a></h1>
+
+<% if @resources.any? %>
+
+	<%= @resources.pager.to_html(@env['REQUEST_URI'].gsub(/\?.*/,'')) if @resources.respond_to?(:pager) %>
+
+	<%= partial(:table) %>
+
+	<%= @resources.pager.to_html(@env['REQUEST_URI'].gsub(/\?.*/,'')) if @resources.respond_to?(:pager) %>
+
+<% else %>
+
+	<h2>No records found.</h2>
+
+<% end %>

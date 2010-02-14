@@ -1,0 +1,197 @@
+/* By Tomas Pollak - Fork Limited */
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	font-size: 14px;
+	font-family: Corbel, Calibri, Helvetica, Arial, sans-serif;
+	background: #efefef;
+}
+
+/*a{ color: #ff6600; }*/
+a { color:#111;}
+
+p{
+	font-size: 1.2em;
+	margin: 1em 0;
+}
+
+hr { border:0; border-top:5px solid #efefef;  margin:15px 0;}
+
+/* flash
+-------------------------------------------------------------*/
+
+#flash{
+	text-align: center;
+	margin: 0;
+	padding: 5px;
+	background: green;
+	color: white;
+}
+
+/* headings
+-------------------------------------------------------------*/
+
+span.hl { background:#efefef; padding:2px;}
+h1 { margin:10px 0; font-size:190%; font-weight:bold; color:#ce1212;}
+h2 { margin:10px 0; font-size:130%;}
+
+/* header, navigation
+-------------------------------------------------------------*/
+
+#header { background:#000; padding: 8px 5% 0 5%; border-bottom:1px solid #444;border-bottom:5px solid #ce1212;}
+#header h1 { color:#333; font-size: 3em; font-weight:bold; margin: 10px 0;}
+#header h1 a{ color: #fff; text-decoration: none}
+#header ul li { display:inline;}
+#header ul li a { color:#fff; text-decoration:none; margin-right:10px; display:inline-block;  padding:8px; -webkit-border-top-right-radius:6px; -webkit-border-top-left-radius:6px; }
+#header ul li a:hover { background:#333;}
+#header ul li.current a { background:#ce1212; font-weight:bold; color:#fff;}
+
+.subnav { padding: 2px 5% 7px 5%; background:#ce1212; font-size:90%; margin: -20px -50px 20px; }
+.subnav li { display:inline;}
+.subnav li a { color:#fff; text-decoration:none; margin-right:10px; display:inline-block; background:#dd5b5b; padding:5px; -webkit-border-radius:3px; -moz-border-radius:3px;}
+.subnav li.current a { background:#fff; font-weight:bold; color:#ce1212;}
+.subnav li a:active { background:#b00909;}
+
+/* container
+-------------------------------------------------------------*/
+
+#container h1{
+	margin-bottom: 30px;
+}
+
+#container{
+	font-size: 1.3em;
+	background: #fff;
+	padding: 20px 50px 50px;
+	position: relative;
+}
+
+#search{
+	float: right;
+	margin-top: 10px;
+}
+#search input{
+	width: 250px;
+	padding: 4px;
+	font-size: 1.1em;
+}
+
+
+/* tablas
+-------------------------------------------------------------*/
+
+table{
+	width: 100%;
+	margin: 0 auto;
+	border-collapse:collapse;
+	text-align: left;
+}
+
+.index table{
+	margin: 1.5em 0;
+}
+
+table { width:100%; margin:10px 0;}
+table tr td, table tr th { border:1px solid #ccc; padding:6px;}
+table tr th { background:#efefef; color:#888; font-size:80%; font-weight:bold;}
+table tr td.no-data { text-align:center; padding:40px 0; color:#999; font-style:italic; font-size:130%;}
+
+table th{
+	border-bottom: 1px solid #ccc;
+	padding: 4px 5px;
+	font-size: 1.1em;
+	color: #888;
+	text-align: left;
+}
+
+table td{
+	padding: 0px; margin:0px;
+	border-bottom: 1px solid #ddd;
+	padding: 6px 5px;
+	color: #666;
+}
+
+table tr:hover{
+	background: #efefef;
+}
+
+
+table .center{
+	text-align: center;
+}
+table .last{
+	text-align: right;
+}
+
+table .check-column{
+	text-align: center;
+}
+
+table .positivo{
+	color: green;
+}
+
+table .negativo{
+	color: #a00;
+}
+
+table td.rel, th.rel {
+	background: #fafafa;
+}
+
+
+table .icon{
+	position: relative;
+	top: 3px;
+	margin-right: 2px;
+	margin-top: -3px;
+}
+
+
+
+
+/* pagintion
+--------------------------------------------------------------*/
+
+.pager{
+	margin: 30px 0;
+	text-align: center;
+}
+.pager li{
+display: inline;
+}
+.pager .disabled{
+	display: none;
+}
+.pager .current{
+	color: #666;
+	margin: 0 3px;
+}
+.pager a{
+	border: 1px solid;
+	padding: 3px 5px;
+	margin: 0 1px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-khtml-border-radius: 2px;
+}
+.pager a:hover{
+	color: #000;
+}
+
+
+/* footer
+-------------------------------------------------------------*/
+
+#footer{
+	text-align: center;
+	color: #999;
+}
+
+#footer { padding:10px 5%; background:#efefef; color:#999; font-size:85%; line-height:1.5; border-top:5px solid #ccc; padding-top:10px;}
+#footer p a { color:#999;}

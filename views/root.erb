@@ -1,0 +1,85 @@
+<!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
+
+<script language="javascript" type="text/javascript" src="<%= base_path %>/js/jit-yc.js"></script>
+<script language="javascript" type="text/javascript" src="<%= base_path %>/js/graph.js"></script>
+
+<% weights = {
+	'DataMapper::Associations::OneToOne::Relationship' => 1,
+	'DataMapper::Associations::ManyToOne::Relationship' => 2,
+	'DataMapper::Associations::OneToMany::Relationship' => 3,
+	'DataMapper::Associations::ManytoMany::Relationship' => 4
+}
+model_relationships = []
+
+@models.each do |model|
+
+	model_map = {
+		:id => model.name.downcase.pluralize,
+		:name => model.name.to_s.pluralize,
+		:data => {
+			:$dim => rand(20),
+			# :$type => "square",
+			:url => model_path(model)
+		}
+	}
+
+	adjs = []
+	model.relationships.each do |rel|
+		# next if rel[1].class.to_s =~ /ManyToOne/
+		adjs << {
+			:nodeTo => rel[1].class.to_s =~ /ToMany/ ? rel[0] : rel[1].child_model_name.pluralize.downcase,
+			:data => {
+				:weigth => weights[rel[1].class.to_s],
+				:type => rel[1].class.to_s.gsub('DataMapper::Associations::', '')
+			}
+		}
+	end
+
+	model_map[:adjacencies] = adjs
+	model_relationships << model_map.to_json
+
+end
+
+model_tree = []
+model = Locality
+
+	model_map = {
+		:id => model.name.downcase.pluralize,
+		:name => model.name.to_s.pluralize,
+		:data => []
+	}
+
+	children = []
+	model.relationships.each do |rel|
+		# next if rel[1].class.to_s =~ /ManyToOne/
+		children << {
+			:id => rel[1].class.to_s =~ /ToMany/ ? rel[0] : rel[1].child_model_name.pluralize.downcase,
+			:name => rel[0],
+			:data => {
+				:relation => rel[1].class.to_s.gsub('DataMapper::Associations::', '')
+			},
+			:children => []
+		}
+	end
+
+	model_map[:children] = children
+	model_tree << model_map.to_json
+
+ %>
+
+<script type="text/javascript">
+    var json_models = [<%= model_relationships.join(",") %>];
+    // var json_models = [<%= model_tree %>];
+</script>
+
+<div id="graph">
+	<div id="id-list"></div>
+
+	<div id="center-container">
+		  <div id="infovis"></div>
+	</div>
+
+	<div id="right-container">
+		<div id="inner-details"></div>
+	</div>
+</div>
