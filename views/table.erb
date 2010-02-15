@@ -1,4 +1,4 @@
-	<table>
+	<table class="sortable">
 		<thead>
 			<tr>
 			<th class="<%= @model.key.first.name.to_s %>-col"><%= @model.key.first.name.to_s.upcase %></th>
@@ -18,11 +18,11 @@
 		</thead>
 		<tbody>
 		<% @resources.each do |r| %>
-		<tr class="<%= r.ok? ? 'good' : 'bad' if r.respond_to? 'ok?' %>">
+		<tr id="resource-<%= r.key.first.to_s %>" class="<%= r.ok? ? 'good' : 'bad' if r.respond_to? 'ok?' %>">
 			<td class="<%= @model.key.first.name.to_s %>-col"><a href="<%= url_for(r) %>"><%= r.key.first.to_s %></a></td>
 			<% r.attributes.each do |a| %>
 			<% next if a[0] == @model.key.first.name %>
-			<td class="<%= a[0] %>-col"><%= a[1] || 'nil' %></a></td>
+			<td class="<%= a[0] %>-col editable"><%= a[1] || 'nil' %></td>
 			<% end %>
 			<% unless params[:association] %>
 			<% @model.relationships.each do |rel| %>

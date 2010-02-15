@@ -1,4 +1,8 @@
-/* By Tomas Pollak - Fork Limited */
+/*
+CSS for Silk
+By Tomas Pollak - Fork Limited
+http://usefork.com
+----------------------------------------- */
 
 *{
 	margin: 0;
@@ -77,7 +81,21 @@ h2 { margin:10px 0; font-size:130%;}
 #search input{
 	width: 250px;
 	padding: 4px;
-	font-size: 1.1em;
+	font-size: 1em;
+	color: #666;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+}
+#search input:focus{
+	color: #333;
+}
+
+.edit-button{
+		float: right;
+		margin: 15px 15px 0 0;
+}
+.edit-button.active{
+	color: green;
 }
 
 
@@ -91,21 +109,23 @@ table{
 	text-align: left;
 }
 
-.index table{
-	margin: 1.5em 0;
+table tr:hover{
+	background: #efefef;
 }
 
-table { width:100%; margin:10px 0;}
-table tr td, table tr th { border:1px solid #ccc; padding:6px;}
-table tr th { background:#efefef; color:#888; font-size:80%; font-weight:bold;}
-table tr td.no-data { text-align:center; padding:40px 0; color:#999; font-style:italic; font-size:130%;}
+table tr td, table tr th {
+	border:1px solid #ccc;
+	padding:6px;
+}
 
 table th{
-	border-bottom: 1px solid #ccc;
 	padding: 4px 5px;
 	font-size: 1.1em;
 	color: #888;
 	text-align: left;
+	background:#efefef;
+	font-size:80%;
+	font-weight:bold;
 }
 
 table td{
@@ -113,11 +133,10 @@ table td{
 	border-bottom: 1px solid #ddd;
 	padding: 6px 5px;
 	color: #666;
+
 }
 
-table tr:hover{
-	background: #efefef;
-}
+table tr td.no-data { text-align:center; padding:40px 0; color:#999; font-style:italic; font-size:130%;}
 
 
 table .center{
@@ -131,18 +150,17 @@ table .check-column{
 	text-align: center;
 }
 
-table .positivo{
+table .good{
 	color: green;
 }
 
-table .negativo{
+table .bad, table .error{
 	color: #a00;
 }
 
 table td.rel, th.rel {
 	background: #fafafa;
 }
-
 
 table .icon{
 	position: relative;
@@ -152,9 +170,7 @@ table .icon{
 }
 
 
-
-
-/* pagintion
+/* pagination
 --------------------------------------------------------------*/
 
 .pager{
@@ -188,10 +204,17 @@ display: inline;
 /* footer
 -------------------------------------------------------------*/
 
-#footer{
+#footer {
 	text-align: center;
-	color: #999;
+	padding:10px 5%;
+	background:#efefef;
+	color:#999;
+	font-size:85%;
+	line-height:1.5;
+	border-top:5px
+	solid #ccc;
+	padding-top:10px;
 }
-
-#footer { padding:10px 5%; background:#efefef; color:#999; font-size:85%; line-height:1.5; border-top:5px solid #ccc; padding-top:10px;}
-#footer p a { color:#999;}
+#footer p a {
+	color:#999;
+}

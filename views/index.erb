@@ -1,6 +1,7 @@
 <%= partial(:subtypes) if !params[:association] and @subtypes.any? %>
 
 <%= partial(:search) %>
+<a class="edit-button" href="#" onclick="Silk.toggleEditableMode(this); return false;">Edit Mode OFF</a>
 
 <h1><%= @resources.pager.total %> <%= @title || @model.name.pluralize %> <a href="<%= model_path %>/new">(new)</a></h1>
 

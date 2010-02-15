@@ -52,8 +52,8 @@ module Silk
 		end
 
 		get "/:model" do
-			filter = @env['rack.request.query_hash'].delete_if{|a| ['page', 'message'].include?(a)}
-			@resources = model.all().page(params[:page], :per_page => PER_PAGE)
+			filter = @env['rack.request.query_hash'].delete_if{|a,b| ['page', 'message'].include?(a) }
+			@resources = model.all(filter).page(params[:page], :per_page => PER_PAGE)
 			@subtypes = model.subtypes
 			erb :index
 		end
@@ -91,9 +91,9 @@ module Silk
 
 		put "/:model/:id" do
 			if resource.update(params[:resource])
-				redirect "/#{model.pluralize}/#{params[:id]}?message=saved"
+				request.xhr? ? resource.to_json : redirect("/#{model.pluralize}/#{params[:id]}?message=saved")
 			else
-				redirect "/#{model.pluralize}/#{params[:id]}?message=not+saved"
+				request.xhr? ? false : redirect("/#{model.pluralize}/#{params[:id]}?message=not+saved")
 			end
 		end
 
