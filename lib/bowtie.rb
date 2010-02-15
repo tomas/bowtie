@@ -1,6 +1,6 @@
 module Bowtie
 
-	%w(sinatra dm-core dm-aggregates dm-pager helpers core_extensions).each {|lib| require lib}
+	%w(sinatra dm-core dm-aggregates dm-serializer dm-pager helpers core_extensions).each {|lib| require lib}
 
 	begin
 		repository(:default).adapter

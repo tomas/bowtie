@@ -22,17 +22,23 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<sinatra>, [">= 0.9.4"])
       s.add_runtime_dependency(%q<dm-core>, [">= 0.10.2"])
       s.add_runtime_dependency(%q<dm-aggregates>, [">= 0.10.2"])
+      s.add_runtime_dependency(%q<dm-serializer>, [">= 0.10.2"])
       s.add_runtime_dependency(%q<dm-pager>, [">= 1.0.1"])
     else
+      s.add_dependency(%q<sinatra>, [">= 0.9.4"])
       s.add_dependency(%q<dm-core>, [">= 0.10.2"])
       s.add_dependency(%q<dm-aggregates>, [">= 0.10.2"])
+      s.add_dependency(%q<dm-serializer>, [">= 0.10.2"])
       s.add_dependency(%q<dm-pager>, [">= 1.0.1"])
     end
   else
+    s.add_dependency(%q<sinatra>, [">= 0.9.4"])
     s.add_dependency(%q<dm-core>, [">= 0.10.2"])
     s.add_dependency(%q<dm-aggregates>, [">= 0.10.2"])
+    s.add_dependency(%q<dm-serializer>, [">= 0.10.2"])
     s.add_dependency(%q<dm-pager>, [">= 1.0.1"])
   end
 end
