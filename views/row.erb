@@ -1,0 +1,25 @@
+<tr id="resource-<%= @r.key.first.to_s %>" class="<%= @r.ok? ? 'good' : 'bad' if @r.respond_to? 'ok?' %>">
+	<td class="<%= @model.key.first.name.to_s %>-col"><a href="<%= url_for(@r) %>"><%= @r.key.first.to_s %></a></td>
+	<% @r.attributes.each do |a| %>
+	<% next if a[0] == @model.key.first.name %>
+	<td class="<%= a[0] %>-col editable"><%= a[1] || 'nil' %></td>
+	<% end %>
+	<% unless params[:association] %>
+	<% @model.relationships.each do |rel| %>
+	<% unless rel[1].class.name =~ /ManyTo/ %>
+	<td class="rel <%= rel[0].to_s %>-col">
+		<a href="<%= model_path %>/<%= @r.id %>/<%= rel[0].to_s %>">
+			<%= rel[1].class.name =~ /OneToOne/ ? "View" : @r.send(rel[0]).count %>
+		</a>
+	</td>
+	<% end %>
+	<% end %>
+	<td><a href="<%= url_for(@r) %>">Show/Edit</a></td>
+	<td>
+	<form method="post" action="<%= model_path %>/<%= @r.id %>" onsubmit="return confirm('Are you sure?');">
+		<input type="hidden" name="_method" value="delete" />
+		<button type="submit">Destroy</button>
+	</form>
+	</td>
+	<% end %>
+</tr>

@@ -1,15 +1,15 @@
 	<table class="sortable">
 		<thead>
 			<tr>
-			<th class="<%= @model.key.first.name.to_s %>-col"><%= @model.key.first.name.to_s.upcase %></th>
+			<th title="<%= @model.key.first.type.to_s %>" class="<%= @model.key.first.name.to_s %>-col"><%= @model.key.first.name.to_s.upcase %></th>
 		<% @resources.first.attributes.each do |p| %>
 			<% next if p[0] == @model.key.first.name %>
-			<th class="<%= p[0].to_s %>-col"><%= p[0].to_s.titleize %></th>
+			<th title="<%= p[1].type.to_s %>" class="<%= p[0].to_s %>-col"><%= p[0].to_s.titleize %></th>
 		<% end %>
 		<% unless params[:association] %>
 		<% @resources.first.class.relationships.each do |rel| %>
-			<% unless rel[1].class.name =~ /ManyToOne/ %>
-			<th class="rel <%= rel[0].to_s %>-col"><%= rel[0].to_s.titleize %></th>
+			<% unless rel[1].class.name =~ /ManyTo/ %>
+			<th title="<%= rel[1].class.name.to_s.gsub('DataMapper::Associations::','') %>" class="rel <%= rel[0].to_s %>-col"><%= rel[0].to_s.titleize %></th>
 			<% end %>
 		<% end %>
 		<% end %>
@@ -18,31 +18,8 @@
 		</thead>
 		<tbody>
 		<% @resources.each do |r| %>
-		<tr id="resource-<%= r.key.first.to_s %>" class="<%= r.ok? ? 'good' : 'bad' if r.respond_to? 'ok?' %>">
-			<td class="<%= @model.key.first.name.to_s %>-col"><a href="<%= url_for(r) %>"><%= r.key.first.to_s %></a></td>
-			<% r.attributes.each do |a| %>
-			<% next if a[0] == @model.key.first.name %>
-			<td class="<%= a[0] %>-col editable"><%= a[1] || 'nil' %></td>
-			<% end %>
-			<% unless params[:association] %>
-			<% @model.relationships.each do |rel| %>
-			<% unless rel[1].class.name =~ /ManyToOne/ %>
-			<td class="rel <%= rel[0].to_s %>-col">
-				<a href="<%= model_path %>/<%= r.id %>/<%= rel[0].to_s %>">
-					<%= rel[1].class.name =~ /OneToOne/ ? "View" : r.send(rel[0]).count %>
-				</a>
-			</td>
-			<% end %>
-			<% end %>
-			<td><a href="<%= url_for(r) %>">Show/Edit</a></td>
-			<td>
-			<form method="post" action="<%= model_path %>/<%= r.id %>" onsubmit="return confirm('Are you sure?');">
-				<input type="hidden" name="_method" value="delete" />
-				<button type="submit">Destroy</button>
-			</form>
-			</td>
-			<% end %>
-		</tr>
+			<% @r = r %>
+			<%= partial(:row) %>
 		<% end %>
 		</tbody>
 	</table>

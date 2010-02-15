@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.description = %q{Sinatra scaffold for DataMapper models.}
   s.email = %q{tomas@usefork.com}
   s.extra_rdoc_files = ["lib/bowtie.rb", "lib/core_extensions.rb", "lib/helpers.rb"]
-  s.files = ["README", "bowtie.gemspec", "lib/bowtie.rb", "lib/core_extensions.rb", "lib/helpers.rb", "views/errors.erb", "views/field.erb", "views/flash.erb", "views/form.erb", "views/index.erb", "views/layout.erb", "views/new.erb", "views/search.erb", "views/search.erb", "views/show.erb", "views/subtypes.erb", "views/table.erb", "public/css/bowtie.css", "public/js/bowtie.js", "public/js/jquery.tablesorter.pack.js", "public/js/jquery.jeditable.pack.js"]
+  s.files = ["README", "bowtie.gemspec", "lib/bowtie.rb", "lib/core_extensions.rb", "lib/helpers.rb", "views/errors.erb", "views/field.erb", "views/flash.erb", "views/form.erb", "views/index.erb", "views/layout.erb", "views/new.erb", "views/search.erb", "views/search.erb", "views/show.erb", "views/subtypes.erb", "views/table.erb", "views/row.erb", "public/css/bowtie.css", "public/js/bowtie.js", "public/js/jquery.tablesorter.pack.js", "public/js/jquery.jeditable.pack.js"]
   s.homepage = %q{http://github.com/tomas/bowtie}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Bowtie", "--main", "README"]
   s.require_paths = ["lib"]
@@ -25,20 +25,17 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<sinatra>, [">= 0.9.4"])
       s.add_runtime_dependency(%q<dm-core>, [">= 0.10.2"])
       s.add_runtime_dependency(%q<dm-aggregates>, [">= 0.10.2"])
-      s.add_runtime_dependency(%q<dm-serializer>, [">= 0.10.2"])
       s.add_runtime_dependency(%q<dm-pager>, [">= 1.0.1"])
     else
       s.add_dependency(%q<sinatra>, [">= 0.9.4"])
       s.add_dependency(%q<dm-core>, [">= 0.10.2"])
       s.add_dependency(%q<dm-aggregates>, [">= 0.10.2"])
-      s.add_dependency(%q<dm-serializer>, [">= 0.10.2"])
       s.add_dependency(%q<dm-pager>, [">= 1.0.1"])
     end
   else
     s.add_dependency(%q<sinatra>, [">= 0.9.4"])
     s.add_dependency(%q<dm-core>, [">= 0.10.2"])
     s.add_dependency(%q<dm-aggregates>, [">= 0.10.2"])
-    s.add_dependency(%q<dm-serializer>, [">= 0.10.2"])
     s.add_dependency(%q<dm-pager>, [">= 1.0.1"])
   end
 end
