@@ -30,6 +30,10 @@ module Bowtie
 			end
 		end
 
+		def clean_params
+				@env['rack.request.query_hash'].delete_if{|a,b| %w(model page message q).include?(a) }
+		end
+
 		def model
 			@model ||= get_model_class
 		end

@@ -45,8 +45,7 @@ module Bowtie
 		get '/search*' do
 			redirect('/' + params[:model] ||= '') if params[:q].blank?
 			q1, q2 = [], []
-			@env['rack.request.query_hash'].each do |key, val|
-				next if ['model','q'].include?(key)
+			clean_params.each do |key, val|
 				q1 << "#{model}.all(:#{key} => '#{val}')"
 			end
 			model.searchable_fields.each do |field|
@@ -59,8 +58,7 @@ module Bowtie
 		end
 
 		get "/:model" do
-			filter = @env['rack.request.query_hash'].delete_if{|a,b| ['page', 'message'].include?(a) }
-			@resources = model.all(filter).page(params[:page], :per_page => PER_PAGE)
+			@resources = model.all(clean_params).page(params[:page], :per_page => PER_PAGE)
 			@subtypes = model.subtypes
 			erb :index
 		end
