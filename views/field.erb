@@ -9,7 +9,7 @@
 			html += '<select class="array" name="resource['+name+']">'
 			@resource.model.options_for_subtype(name.to_sym).each do |option|
 				selected = value == option ? 'selected="selected"' : ''
-				html += '<option value="'+option+'" '+selected+'>'+option.titleize+'</option>'
+				html += '<option value="'+option.to_s+'" '+selected+'>'+option.to_s.titleize+'</option>'
 			end
 			html += '</select>'
 		when "TrueClass","FalseClass"
