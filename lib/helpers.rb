@@ -3,7 +3,7 @@ module Bowtie
 	module Helpers
 
 		def deliver_file
-			return false unless File.exist?(file = "lib/silk/public/#{@env['PATH_INFO']}")
+			return false unless File.exist?(file = "lib/bowtie/public/#{@env['PATH_INFO']}")
 			content_type(Rack::Mime::MIME_TYPES[File.extname(@env['PATH_INFO'])], :charset => 'utf-8')
 			File.read(file)
 		end

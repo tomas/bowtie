@@ -14,7 +14,7 @@ module Bowtie
 
 		# TODO: make this easily modifiable
 		use Rack::Auth::Basic do |username, password|
-			username == 'admin' && password == 'silk'
+			username == 'admin' && password == 'bowtie'
 		end
 
 		use Rack::MethodOverride
