@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.date = %q{2010-02-14}
   s.description = %q{Sinatra scaffold for DataMapper models.}
   s.email = %q{tomas@usefork.com}
-  s.extra_rdoc_files = ["lib/bowtie.rb", "lib/core_extensions.rb", "lib/helpers.rb"]
-  s.files = ["README", "bowtie.gemspec", "lib/bowtie.rb", "lib/core_extensions.rb", "lib/helpers.rb", "views/errors.erb", "views/field.erb", "views/flash.erb", "views/form.erb", "views/index.erb", "views/layout.erb", "views/new.erb", "views/search.erb", "views/search.erb", "views/show.erb", "views/subtypes.erb", "views/table.erb", "views/row.erb", "public/css/bowtie.css", "public/js/bowtie.js", "public/js/jquery.tablesorter.pack.js", "public/js/jquery.jeditable.pack.js"]
+  s.extra_rdoc_files = ["lib/bowtie.rb", "lib/bowtie/admin.rb", "lib/bowtie/core_extensions.rb", "lib/bowtie/helpers.rb"]
+  s.files = ["README", "bowtie.gemspec", "lib/bowtie.rb", "lib/bowtie/admin.rb", "lib/bowtie/core_extensions.rb", "lib/bowtie/helpers.rb", "lib/bowtie/views/errors.erb", "lib/bowtie/views/field.erb", "lib/bowtie/views/flash.erb", "lib/bowtie/views/form.erb", "lib/bowtie/views/index.erb", "lib/bowtie/views/layout.erb", "lib/bowtie/views/new.erb", "lib/bowtie/views/search.erb", "lib/bowtie/views/search.erb", "lib/bowtie/views/show.erb", "lib/bowtie/views/subtypes.erb", "lib/bowtie/views/table.erb", "lib/bowtie/views/row.erb", "lib/bowtie/public/css/bowtie.css", "lib/bowtie/public/js/bowtie.js", "lib/bowtie/public/js/jquery.tablesorter.pack.js", "lib/bowtie/public/js/jquery.jeditable.pack.js"]
   s.homepage = %q{http://github.com/tomas/bowtie}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Bowtie", "--main", "README"]
   s.require_paths = ["lib"]
