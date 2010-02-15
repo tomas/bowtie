@@ -36,14 +36,14 @@ module Bowtie
 
 		get '/search*' do
 			redirect('/' + params[:model] ||= '') if params[:q].blank?
-			q1, q2 = [], []
+			query1, query2 = [], []
 			clean_params.each do |key, val|
-				q1 << "#{model}.all(:#{key} => '#{val}')"
+				query1 << "#{model}.all(:#{key} => '#{val}')"
 			end
 			model.searchable_fields.each do |field|
-				q2 << "#{model}.all(:#{field}.like => '%#{params[:q]}%')"
+				query2 << "#{model}.all(:#{field}.like => '%#{params[:q]}%')"
 			end
-			query = q1.any? ? [q1.join(' & '), q2.join(' + ')].join(' & ') : q2.join(' + ')
+			query = query1.any? ? [query1.join(' & '), query2.join(' + ')].join(' & ') : query2.join(' + ')
 			@resources = eval(query).page(params[:page], :per_page => PER_PAGE)
 			@subtypes = model.subtypes
 			erb :index
@@ -61,7 +61,7 @@ module Bowtie
 		end
 
 		post "/:model" do
-			@resource = model.create(params[:resource])
+			@resource = model.create(params[:resource].normalize)
 			if @resource.valid? and @resource.save
 				redirect "/#{model.pluralize}?notice=created"
 			else
@@ -76,22 +76,28 @@ module Bowtie
 
 		get "/:model/:id/:association" do
 			@title = "#{params[:association].titleize} for #{model.to_s.titleize} ##{params[:id]}"
-			r = model.get(params[:id]).send(params[:association])
-			if r.respond_to?(:page)
-				@resources = r.page(params[:page], :per_page => PER_PAGE)
+			res = model.get(params[:id]).send(params[:association])
+			if res.respond_to?(:page)
+				@resources = res.page(params[:page], :per_page => PER_PAGE)
 				erb :index
 			else
-				redirect('/' + model.to_s + '?error=doesnt+exist') unless r
-				@resource = r
+				redirect('/' + model.to_s + '?error=doesnt+exist') unless res
+				@resource = res
 				erb :show
 			end
 		end
 
 		put "/:model/:id" do
-			if resource.update(params[:resource])
+			puts params[:resource].inspect
+			if resource.update(params[:resource].normalize)
 				request.xhr? ? resource.to_json : redirect("/#{model.pluralize}/#{params[:id]}?notice=saved")
 			else
-				request.xhr? ? false : redirect("/#{model.pluralize}/#{params[:id]}?error=not+saved")
+				if request.xhr?
+					false
+				else
+					@resource = resource
+					erb :show
+				end
 			end
 		end
 

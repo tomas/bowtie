@@ -12,7 +12,7 @@
 				html += '<option value="'+option.to_s+'" '+selected+'>'+option.to_s.titleize+'</option>'
 			end
 			html += '</select>'
-		when "TrueClass","FalseClass"
+		when "TrueClass", "FalseClass", /Boolean/
 			checked = (value == 'n' || !value || value.nil?) ? '' : 'checked="checked"'
 			html += '<input name="resource['+name+']" type="checkbox" '+checked+' />'
 		else

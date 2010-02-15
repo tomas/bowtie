@@ -4,7 +4,7 @@
 			<th title="<%= @model.key.first.type.to_s %>" class="<%= @model.key.first.name.to_s %>-col"><%= @model.key.first.name.to_s.upcase %></th>
 		<% @resources.first.attributes.each do |p| %>
 			<% next if p[0] == @model.key.first.name %>
-			<th title="<%= p[1].type.to_s %>" class="<%= p[0].to_s %>-col"><%= p[0].to_s.titleize %></th>
+			<th title="<%= p[1].class.to_s %>" class="<%= p[0].to_s %>-col"><%= p[0].to_s.titleize %></th>
 		<% end %>
 		<% unless params[:association] %>
 		<% @resources.first.class.relationships.each do |rel| %>

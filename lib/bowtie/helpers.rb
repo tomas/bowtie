@@ -5,7 +5,7 @@ module Bowtie
 		def deliver_file
 			file = File.expand_path(File.dirname(__FILE__)) + "/public/#{@env['PATH_INFO']}"
 			return false unless File.exist?(file)
-			content_type(Rack::Mime::MIME_TYPES[File.extname(@env['PATH_INFO'])], :charset => 'utf-8')
+			content_type(Rack::Mime::MIME_TYPES[File.extname(file)], :charset => 'utf-8')
 			File.read(file)
 		end
 
@@ -47,7 +47,7 @@ module Bowtie
 		end
 
 		def model_path(m = current_model)
-			string = m.name || m
+			string = m.name ||= m
 			base_path + '/' + string.to_s.pluralize.downcase
 		end
 

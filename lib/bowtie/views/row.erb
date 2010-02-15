@@ -6,20 +6,20 @@
 	<% end %>
 	<% unless params[:association] %>
 	<% @model.relationships.each do |rel| %>
-	<% unless rel[1].class.name =~ /ManyTo/ %>
-	<td class="rel <%= rel[0].to_s %>-col">
-		<a href="<%= model_path %>/<%= @r.id %>/<%= rel[0].to_s %>">
-			<%= rel[1].class.name =~ /OneToOne/ ? "View" : @r.send(rel[0]).count %>
-		</a>
-	</td>
+		<% unless rel[1].class.name =~ /ManyTo/ %>
+		<td class="rel <%= rel[0].to_s %>-col">
+			<a href="<%= model_path %>/<%= @r.id %>/<%= rel[0].to_s %>">
+				<%= rel[1].class.name =~ /OneToOne/ ? "View" : @r.send(rel[0]).count %>
+			</a>
+		</td>
+		<% end %>
 	<% end %>
 	<% end %>
 	<td><a href="<%= url_for(@r) %>">Show/Edit</a></td>
 	<td>
-	<form method="post" action="<%= model_path %>/<%= @r.id %>" onsubmit="return confirm('Are you sure?');">
+	<form method="post" action="<%= model_path(@r.model) %>/<%= @r.id %>" onsubmit="return confirm('Are you sure?');">
 		<input type="hidden" name="_method" value="delete" />
 		<button type="submit">Destroy</button>
 	</form>
 	</td>
-	<% end %>
 </tr>

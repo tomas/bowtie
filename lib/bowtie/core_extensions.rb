@@ -32,4 +32,19 @@ class Class
 		self.validators.first.last.map{|a| a.options[:set] if a.class == DataMapper::Validate::WithinValidator && a.field_name == field}.compact.reduce
 	end
 
+	def relation_keys_include?(property)
+		self.relationships.map {|rel| true if property.to_sym == rel[1].child_key.first.name}.reduce
+	end
+
+end
+
+class Hash
+
+	# this is for checkboxes which give us a param of 'on' on the params hash
+	def normalize
+		normalized = {}
+		self.each_pair {|k,v| normalized[k] = v == 'on' ? true : v }
+		normalized
+	end
+
 end

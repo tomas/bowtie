@@ -1,6 +1,6 @@
 <h1><%= @title || @model.name + ':' + @resource.id.to_s %></h1>
 
-<form class="destroy" method="post" action="<%= model_path %>/<%= @resource.id %>" onsubmit="return confirm('Are you sure?');">
+<form class="destroy" method="post" action="<%= model_path(@resource.model) %>/<%= @resource.id %>" onsubmit="return confirm('Are you sure?');">
 	<input type="hidden" name="_method" value="delete" />
 	<button type="submit">Destroy</button>
 </form>
