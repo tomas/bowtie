@@ -1,4 +1,4 @@
-module Silk
+module Bowtie
 
 	module Helpers
 

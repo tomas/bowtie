@@ -1,4 +1,4 @@
-var Silk = {
+var Bowtie = {
 
 ///////////////////////////////////////////////////
 // custom stuff for in-place editing

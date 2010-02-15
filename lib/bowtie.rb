@@ -1,18 +1,25 @@
-module Silk
+module Bowtie
 
-	%w(sinatra dm-core dm-aggregates dm-pager lib/silk/lib/helpers lib/silk/lib/core_extensions).each {|lib| require lib}
+	%w(sinatra dm-core dm-aggregates dm-pager helpers core_extensions).each {|lib| require lib}
+
+	begin
+		repository(:default).adapter
+	rescue DataMapper::RepositoryNotSetupError
+		puts ' ** You need to set up your DataMapper adapter for Bowtie to work. **'
+	end
 
 	class Admin < Sinatra::Base
 
 		PER_PAGE = 25
 
+		# TODO: make this easily modifiable
 		use Rack::Auth::Basic do |username, password|
-			username == 'admin' && password == 'admin'
+			username == 'admin' && password == 'silk'
 		end
 
 		use Rack::MethodOverride
 
-		set :views, File.dirname(__FILE__) + '/views'
+		set :views, File.dirname(__FILE__) + '/../views'
 
 		helpers do
 			include Helpers

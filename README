@@ -1,15 +1,15 @@
-Silk for Sinatra. 
+Bowtie for Sinatra.
 
 Seems to work but need to do a lot of testing yet.
 
 To try out, download and put in /lib in your app. Then in your config.ru do something like:
 
 require 'app'
-require 'lib/silk/admin'
+require 'bowtie'
 
 app = Rack::Builder.new {
   map "/admin" do
-    run Silk::Admin
+    run Bowtie::Admin
   end
 
   map '/' do
@@ -18,5 +18,3 @@ app = Rack::Builder.new {
 }
 
 run app
-
-
