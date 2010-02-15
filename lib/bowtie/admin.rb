@@ -63,7 +63,7 @@ module Bowtie
 		post "/:model" do
 			@resource = model.create(params[:resource])
 			if @resource.valid? and @resource.save
-				redirect "/#{model.pluralize}?message=created"
+				redirect "/#{model.pluralize}?notice=created"
 			else
 				erb :new
 			end
@@ -81,6 +81,7 @@ module Bowtie
 				@resources = r.page(params[:page], :per_page => PER_PAGE)
 				erb :index
 			else
+				redirect('/' + model.to_s + '?error=doesnt+exist') unless r
 				@resource = r
 				erb :show
 			end
@@ -88,17 +89,17 @@ module Bowtie
 
 		put "/:model/:id" do
 			if resource.update(params[:resource])
-				request.xhr? ? resource.to_json : redirect("/#{model.pluralize}/#{params[:id]}?message=saved")
+				request.xhr? ? resource.to_json : redirect("/#{model.pluralize}/#{params[:id]}?notice=saved")
 			else
-				request.xhr? ? false : redirect("/#{model.pluralize}/#{params[:id]}?message=not+saved")
+				request.xhr? ? false : redirect("/#{model.pluralize}/#{params[:id]}?error=not+saved")
 			end
 		end
 
 		delete "/:model/:id" do
 			if resource.destroy
-				redirect "/#{model.pluralize}?message=destroyed"
+				redirect "/#{model.pluralize}?notice=destroyed"
 			else
-				redirect "/#{model.pluralize}/#{params[:id]}?message=not+destroyed"
+				redirect "/#{model.pluralize}/#{params[:id]}?error=not+destroyed"
 			end
 		end
 	end

@@ -1,5 +1,11 @@
-<% if params[:message] %>
+<% if params[:notice] %>
 
-	<p id="flash">Resource <%= params[:message] %>.</p>
+	<p id="flash" class="notice">Resource <%= params[:notice] %>.</p>
+
+<% end %>
+
+<% if params[:error] %>
+
+	<p id="flash" class="error">Resource <%= params[:error] %>.</p>
 
 <% end %>
