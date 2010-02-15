@@ -3,7 +3,7 @@ module Bowtie
 	module Helpers
 
 		def deliver_file
-			file = file = File.expand_path(File.dirname(__FILE__)) + "/../public/#{@env['PATH_INFO']}"
+			file = File.expand_path(File.dirname(__FILE__)) + "/../public/#{@env['PATH_INFO']}"
 			return false unless File.exist?(file)
 			content_type(Rack::Mime::MIME_TYPES[File.extname(@env['PATH_INFO'])], :charset => 'utf-8')
 			File.read(file)
