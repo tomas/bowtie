@@ -1,0 +1,42 @@
+= Bowtie for Sinatra.
+
+Zeroconf admin generator for DataMapper models, written in Sinatra.
+
+= What it does
+
+Reads the information on your models and creates a nice panel in which you can view, edit and destroy records easily.
+
+= Installation
+
+  $ sudo gem install bowtie
+
+= Configuration
+
+Mount Bowtie wherever you want by editing your config.ru file:
+
+  require 'myapp'
+  require 'bowtie'
+
+  app = Rack::Builder.new {
+    map "/admin" do
+      run Bowtie::Admin
+    end
+
+    map '/' do
+      run MyApp
+    end
+  }
+
+  run app
+
+Now you can go to /admin in your app's path and try out Bowtie using admin:bowtie as user:password combination.
+
+= TODO
+
+ * User definable user/password combination.
+ * Better handling of types (Text, JSON, IPAddress) in #show
+ * Better handling of relationships in #show
+
+= Copyright
+
+(c) Tomás Pollak for Fork Limited. Released under the MIT licence.
