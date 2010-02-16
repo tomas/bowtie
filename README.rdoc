@@ -39,4 +39,4 @@ Now you can go to /admin in your app's path and try out Bowtie using admin:bowti
 
 = Copyright
 
-(c) Tomás Pollak for Fork Limited. Released under the MIT licence.
+(c) Tomás Pollak for Fork Ltd. Released under the MIT license.
