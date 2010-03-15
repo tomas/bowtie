@@ -2,6 +2,12 @@ module Bowtie
 
 	module Helpers
 
+		def base_path
+			env['SCRIPT_NAME']
+		end
+
+		# requests, redirects
+
 		def deliver_file
 			file = File.expand_path(File.dirname(__FILE__)) + "/public/#{@env['PATH_INFO']}"
 			return false unless File.exist?(file)
@@ -9,18 +15,15 @@ module Bowtie
 			File.read(file)
 		end
 
-		def base_path
-			env['SCRIPT_NAME']
-		end
-
-		# Sinatra's redirect is not adding path prefix. Seems like a bug to me.
 		def redirect(uri, *args)
 			super base_path + uri.downcase, *args
 		end
 
-		def partial(name, *args)
-			erb(name, :layout => false, *args)
+		def clean_params
+				@env['rack.request.query_hash'].delete_if{|a,b| %w(model page notice error q).include?(a) }
 		end
+
+		# models, resources
 
 		def get_model_class
 			begin
@@ -28,10 +31,6 @@ module Bowtie
 			rescue NameError
 				halt 404, "Model not found!"
 			end
-		end
-
-		def clean_params
-				@env['rack.request.query_hash'].delete_if{|a,b| %w(model page notice error q).include?(a) }
 		end
 
 		def model
@@ -44,6 +43,12 @@ module Bowtie
 
 		def current_model
 			model
+		end
+
+		# views, paths
+
+		def partial(name, *args)
+			erb(name, :layout => false, *args)
 		end
 
 		def model_path(m = current_model)

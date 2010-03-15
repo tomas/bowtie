@@ -4,9 +4,15 @@ module Bowtie
 
 		PER_PAGE = 25
 
-		# TODO: make this easily modifiable
 		use Rack::Auth::Basic do |username, password|
-			username == 'admin' && password == 'bowtie'
+			begin
+				user = ::ADMIN[:user]
+				pass = ::ADMIN[:pass]
+			rescue NameError
+				user = 'admin'
+				pass = 'bowtie'
+			end
+			username == user && password == pass
 		end
 
 		use Rack::MethodOverride
