@@ -6,8 +6,8 @@ module Bowtie
 
 		use Rack::Auth::Basic do |username, password|
 			begin
-				user = ::ADMIN[:user]
-				pass = ::ADMIN[:pass]
+				user = ::AUTH[:user]
+				pass = ::AUTH[:pass]
 			rescue NameError
 				user = 'admin'
 				pass = 'bowtie'
