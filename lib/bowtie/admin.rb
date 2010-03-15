@@ -88,7 +88,6 @@ module Bowtie
 		end
 
 		put "/:model/:id" do
-			puts params[:resource].inspect
 			if resource.update(params[:resource].normalize)
 				request.xhr? ? resource.to_json : redirect("/#{model.pluralize}/#{params[:id]}?notice=saved")
 			else
