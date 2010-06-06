@@ -17,7 +17,7 @@ Mount Bowtie wherever you want by editing your config.ru file, optionally includ
   require 'myapp'
   require 'bowtie'
 
-	BOWTIE_AUTH = {:user => 'admin', :pass => '12345' }
+  BOWTIE_AUTH = {:user => 'admin', :pass => '12345' }
 
   app = Rack::Builder.new {
     map "/admin" do
