@@ -12,10 +12,12 @@ Reads the information on your models and creates a nice panel in which you can v
 
 = Configuration
 
-Mount Bowtie wherever you want by editing your config.ru file:
+Mount Bowtie wherever you want by editing your config.ru file, optionally including the admin/pass combination for the panel.
 
   require 'myapp'
   require 'bowtie'
+
+	BOWTIE_AUTH = {:user => 'admin', :pass => '12345' }
 
   app = Rack::Builder.new {
     map "/admin" do
@@ -29,15 +31,14 @@ Mount Bowtie wherever you want by editing your config.ru file:
 
   run app
 
-Now you can go to /admin in your app's path and try out Bowtie using admin:bowtie as user:password combination.
+Now you can go to /admin in your app's path and try out Bowtie using your user/pass combination. If not set, it defaults to admin/bowtie.
 
 = TODO
 
- * User definable user/password combination.
  * Better handling of types (Text, JSON, IPAddress) in #show
  * Better handling of relationships in #show
 
 = Copyright
 
-(c) 2010 - Tomás Pollak for Fork Ltd. 
+(c) 2010 - Tomás Pollak for Fork Ltd.
 Released under the MIT license.

@@ -25,7 +25,12 @@ class Class
 	end
 
 	def subtypes
-		self.validators.first.last.map{|a,b| b = {a.field_name => a.options[:set]} if a.class == DataMapper::Validate::WithinValidator}.compact
+		begin
+			self.validators.first.last.map{|a,b| b = {a.field_name => a.options[:set]} if a.class == DataMapper::Validate::WithinValidator}.compact
+		rescue NoMethodError
+			# puts ' -- dm-validations gem not included. Cannot check subtypes for class.'
+			[]
+		end
 	end
 
 	def options_for_subtype(field)
