@@ -10,6 +10,10 @@ Reads the information on your models and creates a nice panel in which you can v
 
   $ sudo gem install bowtie
 
+= Important
+
+From version 0.3, Bowtie is meant to be used from DataMapper 1.0.0 on. For previous versions please install with -v=0.2.5.
+
 = Configuration
 
 Mount Bowtie wherever you want by editing your config.ru file, optionally including the admin/pass combination for the panel.
