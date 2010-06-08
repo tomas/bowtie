@@ -187,12 +187,13 @@ table .check-column{
 	text-align: center;
 }
 
-table .good{
-	color: green;
+table tr.good{
+/*	background: green;*/
 }
 
-table .bad, table .error{
-	color: #a00;
+table tr.bad td, table .error{
+/*	background-color: #fbf5dc;*/
+	background-color: #FFEFEF;
 }
 
 table th.rel{
