@@ -1,5 +1,5 @@
 /*
-CSS for Bowtie
+CSS for Bowtie Datamapper Admin
 By Tomas Pollak - Fork Limited
 http://usefork.com
 ----------------------------------------- */
@@ -54,11 +54,38 @@ h2 { margin:10px 0; font-size:130%;}
 /* header, navigation
 -------------------------------------------------------------*/
 
-#header { background:#000; padding: 8px 5% 0 5%; border-bottom:1px solid #444;border-bottom:5px solid #528e00;}
-#header h1 { color:#333; font-size: 3em; font-weight:bold; margin: 10px 0;}
-#header h1 a{ color: #fff; text-decoration: none}
-#header ul li { display:inline;}
-#header ul li a { color:#fff; text-decoration:none; margin-right:10px; display:inline-block;  padding:8px; -webkit-border-top-right-radius:6px; -webkit-border-top-left-radius:6px; }
+#header {
+	background:#000;
+	padding: 8px 5% 0 5%;
+	border-bottom:1px solid #444;
+	border-bottom:5px solid #528e00;
+}
+#header h1 {
+	color:#333;
+	font-size: 3em;
+	font-weight:bold;
+	margin: 10px 0;
+}
+#header h1 a{
+	color: #fff;
+	text-decoration: none
+}
+#header ul li {
+	display:inline;
+}
+
+#header ul li a {
+	color:#fff;
+	text-decoration:none;
+	margin-right:10px;
+	display:inline-block;
+	padding:8px;
+	-webkit-border-top-right-radius:6px;
+	-webkit-border-top-left-radius:6px;
+	-moz-border-top-right-radius: 6px;
+	-moz-border-top-left-radius: 6px;
+}
+
 #header ul li a:hover { background:#333;}
 #header ul li.current a { background: #528e00; font-weight:bold; color:#fff;}
 
@@ -141,8 +168,13 @@ table td{
 
 }
 
-table tr td.no-data { text-align:center; padding:40px 0; color:#999; font-style:italic; font-size:130%;}
-
+table tr td.no-data {
+	text-align:center;
+	padding:40px 0;
+	color:#999;
+	font-style:italic;
+	font-size:130%;
+}
 
 table .center{
 	text-align: center;
@@ -163,7 +195,11 @@ table .bad, table .error{
 	color: #a00;
 }
 
-table td.rel, th.rel {
+table th.rel{
+	background: #999;
+	color: #fff
+}
+table td.rel {
 	background: #fafafa;
 }
 
@@ -182,11 +218,19 @@ input:focus{
 }
 
 form.destroy button{
-	font-size: 1em;
 	color: #666;
 	padding: 2px 5px;
+}
+
+.big.destroy button{
+	font-size: 1em;
 	margin-bottom: 20px;
 	color: #a00;
+}
+
+.destroy button:hover{
+	cursor: pointer;
+	color: #000;
 }
 
 form.resource small{
@@ -240,10 +284,6 @@ form .submit input{
 .pager .disabled{
 	display: none;
 }
-.pager .current{
-	color: #666;
-	margin: 0 3px;
-}
 .pager a{
 	border: 1px solid;
 	padding: 3px 5px;
@@ -255,6 +295,11 @@ form .submit input{
 }
 .pager a:hover{
 	color: #000;
+}
+.pager .active a{
+	color: #fff;
+	background: #528e00;
+	border-color: #528e00;
 }
 
 

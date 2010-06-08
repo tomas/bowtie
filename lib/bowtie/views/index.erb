@@ -7,11 +7,11 @@
 
 <% if @resources.any? %>
 
-	<%= @resources.pager.to_html(@env['REQUEST_URI'].gsub(/\?.*/,'')) if @resources.respond_to?(:pager) %>
+	<%= @resources.pager.to_html(@env['REQUEST_URI']) if @resources.respond_to?(:pager) %>
 
 	<%= partial(:table) %>
 
-	<%= @resources.pager.to_html(@env['REQUEST_URI'].gsub(/\?.*/,'')) if @resources.respond_to?(:pager) %>
+	<%= @resources.pager.to_html(@env['REQUEST_URI']) if @resources.respond_to?(:pager) %>
 
 <% else %>
 

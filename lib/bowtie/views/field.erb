@@ -4,7 +4,7 @@
 	name = @p.name.to_s
 	value = @resource.send(@p.name).to_s
 
-	case @p.type.to_s
+	case @p.class.to_s.gsub("DataMapper::Property::",'')
 		when "Array", /Class/ # weird how datamapper names enum classes
 			html += '<select class="array" name="resource['+name+']">'
 			@resource.model.options_for_subtype(name.to_sym).each do |option|

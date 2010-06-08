@@ -8,7 +8,7 @@
 	<% unless [:created_at, :id].include?(p.name) %>
 	<% @p = p %>
 	<tr>
-		<td class="left-col"><%= p.name.to_s.titleize %> <small>(<%= p.type.to_s %>)</small></td>
+		<td class="left-col"><%= p.name.to_s.titleize %> <small>(<%= p.class.name.to_s.gsub("DataMapper::Property::",'') %>)</small></td>
 		<td class="right-col"><%= partial(:field) %></td>
 	</tr>
 	<% end %>

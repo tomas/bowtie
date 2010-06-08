@@ -21,7 +21,7 @@ class Class
 	end
 
 	def searchable_fields
-		self.properties.map{|a| a.name if a.type == String}.compact
+		self.properties.map{|a| a.name if a.class == DataMapper::Property::String}.compact
 	end
 
 	def subtypes
