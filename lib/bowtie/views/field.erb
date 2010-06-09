@@ -2,7 +2,11 @@
 
 	html =''
 	name = @p.name.to_s
-	value = @resource.send(@p.name).to_s
+	begin
+		value = @resource.send(@p.name)
+	rescue NoMethodError
+		value = ''
+	end
 
 	case @p.class.to_s.gsub("DataMapper::Property::",'')
 		when "Array", /Class/ # weird how datamapper names enum classes
@@ -13,10 +17,10 @@
 			end
 			html += '</select>'
 		when "TrueClass", "FalseClass", /Boolean/
-			checked = (value == 'n' || value.blank?) ? '' : 'checked="checked"'
+			checked = value == true ? 'checked="checked"' : ''
 			html += '<input name="resource['+name+']" type="checkbox" '+checked+' />'
 		else
-			html += '<input class="string" type="text" name="resource['+name+']" value="'+value+'" />'
+			html += '<input class="string" type="text" name="resource['+name+']" value="'+value.to_s+'" />'
 	end
 	html
 

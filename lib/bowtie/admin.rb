@@ -67,7 +67,7 @@ module Bowtie
 		end
 
 		post "/:model" do
-			@resource = model.create(params[:resource].normalize)
+			@resource = model.create(params[:resource].prepare_for_query(model))
 			if @resource.valid? and @resource.save
 				redirect "/#{model.pluralize}?notice=created"
 			else
@@ -94,11 +94,15 @@ module Bowtie
 		end
 
 		put "/:model/:id" do
-			if resource.update(params[:resource].normalize)
-				request.xhr? ? resource.to_json : redirect("/#{model.pluralize}/#{params[:id]}?notice=saved")
-			else
-				if request.xhr?
+			if request.xhr? # dont pass through hooks or put the boolean stuff
+				if resource.update!(params[:resource].filter_inaccessible_in(model).normalize)
+					resource.to_json
+				else
 					false
+				end
+			else # normal request
+				if resource.update(params[:resource].prepare_for_query(model))
+					redirect("/#{model.pluralize}/#{params[:id]}?notice=updated")
 				else
 					@resource = resource
 					erb :show

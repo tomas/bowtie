@@ -141,10 +141,6 @@ table{
 	text-align: left;
 }
 
-table tr:hover{
-	background: #efefef;
-}
-
 table tr td, table tr th {
 	border:1px solid #ccc;
 	padding:6px;
@@ -187,21 +183,35 @@ table .check-column{
 	text-align: center;
 }
 
-table tr.good{
-/*	background: green;*/
+table tr.active,
+table tr.enabled{
+	border-left: 5px solid #528e00;
 }
 
-table tr.bad td, table .error{
+table tr.active td,
+table tr.enabled td{
+	background: #ebf9eb;
+}
+
+table tr.cancelled,
+table tr.disabled,
+table tr.suspended{
+	border-left: 5px solid #a00;
+}
+
+table tr.cancelled td,
+table tr.disabled td,
+table tr.suspended td{
 /*	background-color: #fbf5dc;*/
 	background-color: #FFEFEF;
 }
 
 table th.rel{
 	background: #999;
-	color: #fff
+	color: #fff;
 }
 table td.rel {
-	background: #fafafa;
+	background: #eee;
 }
 
 table .icon{
@@ -209,6 +219,10 @@ table .icon{
 	top: 3px;
 	margin-right: 2px;
 	margin-top: -3px;
+}
+
+table tr:hover td{
+	background: #ffffed;
 }
 
 /* forms
