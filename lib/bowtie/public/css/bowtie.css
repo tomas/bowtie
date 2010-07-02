@@ -183,22 +183,43 @@ table .check-column{
 	text-align: center;
 }
 
+/* good states
+---------------------------*/
+
+table tr.ok,
 table tr.active,
 table tr.enabled{
 	border-left: 5px solid #528e00;
 }
 
+table tr.ok td,
 table tr.active td,
 table tr.enabled td{
-	background: #ebf9eb;
+	background: #EFFFF0;
 }
 
+/* "middle" states
+---------------------------*/
+
+table tr.pending{
+/*	border-left: 5px solid #ffcc00;*/
+}
+
+table tr.pending td{
+/*	background: #ebf9eb;*/
+}
+
+/* bad states
+---------------------------*/
+
+table tr.deleted,
 table tr.cancelled,
 table tr.disabled,
 table tr.suspended{
 	border-left: 5px solid #a00;
 }
 
+table tr.deleted td,
 table tr.cancelled td,
 table tr.disabled td,
 table tr.suspended td{
