@@ -48,7 +48,7 @@ module Bowtie
 		# views, paths
 
 		def partial(name, *args)
-			erb(name, :layout => false, *args)
+			erb(name, {:layout => false}, *args)
 		end
 
 		def model_path(m = current_model)
@@ -58,6 +58,10 @@ module Bowtie
 
 		def url_for(object)
 			model_path(object.class) + '/' + object.id.to_s
+		end
+
+		def truncate(str, length)
+			str.to_s.length > length ? str.to_s[0..length] + '&hellip;' : str.to_s
 		end
 
 	end

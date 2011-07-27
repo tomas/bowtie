@@ -2,7 +2,7 @@
 	<td class="<%= @model.key.first.name.to_s %>-col"><a href="<%= url_for(@r) %>"><%= @r.key.first.to_s %></a></td>
 	<% @r.attributes.each do |a| %>
 	<% next if a[0] == @model.key.first.name %>
-	<td class="<%= a[0] %>-col editable"><%= a[1] || 'nil' %></td>
+	<td class="<%= a[0] %>-col editable"><%= truncate(a[1], 64) || 'nil' %></td>
 	<% end %>
 	<% unless params[:association] %>
 	<% @model.relationships.each do |rel| %>
