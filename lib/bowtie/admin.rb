@@ -33,7 +33,9 @@ module Bowtie
 		end
 
 		get '/' do
-			redirect ''
+		  # redirect '' results in an endless redirect on the current version of sinatra/rack
+			#redirect ''
+			redirect '/' + @models.first.pluralize
 		end
 
 		get '' do
