@@ -1,9 +1,9 @@
 <%=
 
 	html =''
-	name = @p.name.to_s
+	name = @p
 	begin
-		value = @resource.send(@p.name)
+		value = @resource.send(@p)
 	rescue NoMethodError
 		value = ''
 	end
@@ -20,7 +20,7 @@
 			checked = value == true ? 'checked="checked"' : ''
 			html += '<input name="resource['+name+']" type="checkbox" '+checked+' />'
 		else
-			html += '<input class="string" type="text" name="resource['+name+']" value="'+value.to_s+'" />'
+			html += '<input class="string" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
 	end
 	html
 

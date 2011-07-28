@@ -1,8 +1,8 @@
 module Bowtie
 
-	class Admin < Sinatra::Base
+	PER_PAGE = 25
 
-		PER_PAGE = 25
+	class Admin < Sinatra::Base
 
 		use Rack::Auth::Basic do |username, password|
 			begin
@@ -25,7 +25,7 @@ module Bowtie
 
 		before do
 			@app_name = ENV['APP_NAME'] ? [self.class.name, ENV['APP_NAME']].join(' > ') : self.class.name
-			@models = DataMapper::Model.descendants.to_a
+			@models = Bowtie.models
 		end
 
 		get '/*.js|css|png|jpg' do
@@ -34,30 +34,21 @@ module Bowtie
 
 		get '/' do
 		  # redirect '' results in an endless redirect on the current version of sinatra/rack
-			redirect '/' + @models.first.pluralize
+			redirect '/' + @models.first.linkable
 		end
 
 		get '' do
-			redirect '/' + @models.first.pluralize
+			redirect '/' + @models.first.linkable
 		end
 
 		get '/search*' do
 			redirect('/' + params[:model] ||= '') if params[:q].blank?
-			query1, query2 = [], []
-			clean_params.each do |key, val|
-				query1 << "#{model}.all(:#{key} => '#{val}')"
-			end
-			model.searchable_fields.each do |field|
-				query2 << "#{model}.all(:#{field}.like => '%#{params[:q]}%')"
-			end
-			query = query1.any? ? [query1.join(' & '), query2.join(' + ')].join(' & ') : query2.join(' + ')
-			@resources = eval(query).page(params[:page], :per_page => PER_PAGE)
-			@subtypes = model.subtypes
+			@resources = Bowtie.search(params)
 			erb :index
 		end
 
 		get "/:model" do
-			@resources = model.all(clean_params).page(params[:page], :per_page => PER_PAGE)
+			@resources = Bowtie.get_many(model, clean_params, params[:page])
 			@subtypes = model.subtypes
 			erb :index
 		end
@@ -68,9 +59,9 @@ module Bowtie
 		end
 
 		post "/:model" do
-			@resource = model.create(params[:resource].prepare_for_query(model))
+			@resource = Bowtie.create(model, params[:resource].prepare_for_query(model))
 			if @resource.valid? and @resource.save
-				redirect "/#{model.pluralize}?notice=created"
+				redirect "/#{model.linkable}?notice=created"
 			else
 				erb :new
 			end
@@ -83,27 +74,31 @@ module Bowtie
 
 		get "/:model/:id/:association" do
 			@title = "#{params[:association].titleize} for #{model.to_s.titleize} ##{params[:id]}"
-			res = model.get(params[:id]).send(params[:association])
-			if res.respond_to?(:page)
-				@resources = res.page(params[:page], :per_page => PER_PAGE)
+			res = Bowtie.get_associated(model, params)
+
+			redirect('/' + model.linkable + '?error=doesnt+exist') if res.nil? or (res.is_a?(Array) and res.count == 0)
+
+			if res.is_a?(Array)
+				@resources = Bowtie.add_paging(res, params[:page])
 				erb :index
 			else
-				redirect('/' + model.to_s + '?error=doesnt+exist') unless res
 				@resource = res
 				erb :show
 			end
+
 		end
 
 		put "/:model/:id" do
 			if request.xhr? # dont pass through hooks or put the boolean stuff
-				if resource.update!(params[:resource].filter_inaccessible_in(model).normalize)
+				# if Bowtie.update!(resource, params[:resource].normalize)
+				if Bowtie.update!(resource, params[:resource].filter_inaccessible_in(model).normalize)
 					resource.to_json
 				else
 					false
 				end
 			else # normal request
-				if resource.update(params[:resource].prepare_for_query(model))
-					redirect("/#{model.pluralize}/#{params[:id]}?notice=updated")
+				if Bowtie.update(resource, params[:resource].prepare_for_query(model))
+					redirect("/#{model.linkable}/#{params[:id]}?notice=updated")
 				else
 					@resource = resource
 					erb :show
@@ -113,11 +108,12 @@ module Bowtie
 
 		delete "/:model/:id" do
 			if resource.destroy
-				redirect "/#{model.pluralize}?notice=destroyed"
+				redirect "/#{model.linkable}?notice=destroyed"
 			else
-				redirect "/#{model.pluralize}/#{params[:id]}?error=not+destroyed"
+				redirect "/#{model.linkable}/#{params[:id]}?error=not+destroyed"
 			end
 		end
+
 	end
 
 end

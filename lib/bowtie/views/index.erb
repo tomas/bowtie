@@ -3,15 +3,15 @@
 <%= partial(:search) %>
 <a class="edit-button" href="#" title="Enables in-place editing of editable fields" onclick="Bowtie.toggleEditableMode(this); return false;">Edit Mode OFF</a>
 
-<h1><%= @resources.pager.total %> <%= @title || @model.name.pluralize %> <a href="<%= model_path %>/new">(new)</a></h1>
+<h1><%= total_entries(@resources) %> <%= @title || @model.name.pluralize %> <a href="<%= model_path %>/new">(new)</a></h1>
 
 <% if @resources.any? %>
 
-	<%= @resources.pager.to_html(@env['REQUEST_URI']) if @resources.respond_to?(:pager) %>
+	<%= show_pager(@resources, request.path_info) %>
 
 	<%= partial(:table) %>
 
-	<%= @resources.pager.to_html(@env['REQUEST_URI']) if @resources.respond_to?(:pager) %>
+	<%= show_pager(@resources, request.path_info) %>
 
 <% else %>
 

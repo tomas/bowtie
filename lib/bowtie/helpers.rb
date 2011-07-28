@@ -38,7 +38,7 @@ module Bowtie
 		end
 
 		def resource
-			@resource ||= model.get(params[:id]) or halt(404, 'Resource not found!')
+			Bowtie.get_one(model, params[:id]) or halt(404, 'Resource not found!')
 		end
 
 		def current_model
@@ -56,12 +56,28 @@ module Bowtie
 			base_path + '/' + string.to_s.pluralize.downcase
 		end
 
-		def url_for(object)
-			model_path(object.class) + '/' + object.id.to_s
+		def url_for(resource)
+			model_path(resource.class) + '/' + resource.id.to_s
+		end
+
+		def link_to(string, resource)
+			uri = resource.nil? ? "#" : url_for(resource)
+			"<a href='#{uri}'>#{string}</a>"
 		end
 
 		def truncate(str, length)
 			str.to_s.length > length ? str.to_s[0..length] + '&hellip;' : str.to_s
+		end
+
+		def render_assoc_header(rel_name, assoc)
+			"<th title='#{assoc.class.name.to_s.gsub('DataMapper::Associations::','')}' class='rel #{rel_name }-col'>#{rel_name.to_s.titleize}</th>"
+		end
+		
+		def render_assoc_row(r, rel_name, assoc)
+			html = "<td class='rel #{rel_name.to_s}-col'>"
+			html += "<a href='#{model_path}/#{r.id}/#{rel_name.to_s}'>"
+			html += Bowtie.has_one_association?(assoc) ? "View #{rel_name.to_s}" : r.send(rel_name).count.to_s
+			html += "</a>"
 		end
 
 	end

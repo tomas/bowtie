@@ -1,25 +1,28 @@
 	<table class="sortable">
 		<thead>
 			<tr>
-			<th title="<%= @model.key.first.type.to_s %>" class="<%= @model.key.first.name.to_s %>-col"><%= @model.key.first.name.to_s.upcase %></th>
-		<% @resources.first.attributes.each do |p| %>
-			<% next if p[0] == @model.key.first.name %>
-			<th title="<%= p[1].class.to_s %>" class="<%= p[0].to_s %>-col"><%= p[0].to_s.titleize %></th>
-		<% end %>
-		<% unless params[:association] %>
-		<% @resources.first.class.relationships.each do |rel| %>
-			<% unless rel[1].class.name =~ /ManyTo/ %>
-			<th title="<%= rel[1].class.name.to_s.gsub('DataMapper::Associations::','') %>" class="rel <%= rel[0].to_s %>-col"><%= rel[0].to_s.titleize %></th>
+			<th title="<%= @model.primary_key %>" class="<%= @model.primary_key %>-col"><%= @model.primary_key.to_s.upcase %></th>
+
+			<% @resources.first.attributes.each do |k, v| %>
+				<% next if k.to_s == 'id' or k.to_s[/id$/] or k == '_type' or v.class == Array %>
+				<th title="<%= v.class.to_s %>" class="<%= k.to_s %>-col"><%= k.to_s.titleize %></th>
 			<% end %>
-		<% end %>
-		<% end %>
+
+			<% unless params[:association] %>
+			<% @resources.first.class.associations.each do |rel_name, assoc| %>
+				<% next if Bowtie.belongs_to_association?(assoc) %>
+				<%= render_assoc_header(rel_name, assoc) %>
+			<% end %>
+			<% end %>
+
 			<th class="actions" colspan="3">&nbsp;</th>
 			</tr>
 		</thead>
+
 		<tbody>
-		<% @resources.each do |r| %>
-			<% @r = r %>
+		<% @resources.each do |@r| %>
 			<%= partial(:row) %>
 		<% end %>
 		</tbody>
+
 	</table>

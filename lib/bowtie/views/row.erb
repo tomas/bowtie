@@ -1,25 +1,25 @@
-<tr id="resource-<%= @r.key.first.to_s %>" class="<%= @r.state.to_s if @r.respond_to?(:state) %>">
-	<td class="<%= @model.key.first.name.to_s %>-col"><a href="<%= url_for(@r) %>"><%= @r.key.first.to_s %></a></td>
-	<% @r.attributes.each do |a| %>
-	<% next if a[0] == @model.key.first.name %>
-	<td class="<%= a[0] %>-col editable"><%= truncate(a[1], 64) || 'nil' %></td>
-	<% end %>
-	<% unless params[:association] %>
-	<% @model.relationships.each do |rel| %>
-		<% unless rel[1].class.name =~ /ManyTo/ %>
-		<td class="rel <%= rel[0].to_s %>-col">
-			<a href="<%= model_path %>/<%= @r.id %>/<%= rel[0].to_s %>">
-				<%= rel[1].class.name =~ /OneToOne/ ? "View" : @r.send(rel[0]).count %>
-			</a>
-		</td>
+<tr id="resource-<%= @r.primary_key.to_s %>" class="<%= @r.state.to_s if @r.respond_to?(:state) %>">
+	<td class="<%= @model.primary_key %>-col"><a href="<%= url_for(@r) %>"><%= @r.primary_key %></a></td>
+	<% @r.attributes.each do |k, v| %>
+
+		<% next if k == @model.primary_key or k.to_s[/id$/] or k == '_type' %>
+		<td class="<%= k %>-col editable"><%= truncate(v, 64) || 'nil' %></td>
 		<% end %>
+
+	<% unless params[:association] %>
+	<% @model.associations.each do |rel_name, assoc| %>
+		<% next if Bowtie.belongs_to_association?(assoc) %>
+		<%= render_assoc_row(@r, rel_name, assoc) %>
 	<% end %>
 	<% end %>
+
 	<td><a href="<%= url_for(@r) %>">View</a></td>
+
 	<td>
-	<form class="destroy" method="post" action="<%= model_path(@r.model) %>/<%= @r.id %>" onsubmit="return confirm('Are you sure?');">
+	<form class="destroy" method="post" action="<%= model_path(@r.class) %>/<%= @r.id %>" onsubmit="return confirm('Are you sure?');">
 		<input type="hidden" name="_method" value="delete" />
 		<button type="submit">Destroy</button>
 	</form>
 	</td>
+
 </tr>

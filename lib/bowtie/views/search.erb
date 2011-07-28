@@ -1,7 +1,7 @@
 	<% model = params[:model] %>
 	<form id="search" action="<%= base_path %>/search" method="get">
 		<% params.each do |k, v| %>
-		<% next if ['splat', 'q', 'page'].include?(k) or v.blank? %>
+		<% next if ['splat', 'q', 'page'].include?(k) or v == '' %>
 			<input type="hidden" name="<%= k %>" value="<%= v %>" />
 		<% end %>
 		<input type="text" name="q"  value="Find <%= model %>:" onfocus="if(this.value=='Find <%= model %>:')this.value='';" onblur="if(this.value=='')this.value='Find <%= model %>:';"/>

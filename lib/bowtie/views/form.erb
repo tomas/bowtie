@@ -1,22 +1,22 @@
-<form class="resource" method="post" action="<%= model_path(@resource.model) %><%= '/' + @resource.id.to_s if @resource.id %>">
+<form class="resource" method="post" action="<%= model_path(@resource.class) %><%= '/' + @resource.id.to_s if @resource.id %>">
 <%= '<input type="hidden" name="_method" value="put">' if @resource.id %>
 
 <%= partial(:errors) %>
 
-<table>
-	<% @resource.model.properties.each do |p| %>
-	<% unless [:created_at, :id].include?(p.name) %>
-	<% @p = p %>
+	<table>
+
+	<% @resource.class.field_names.each do |@p| %>
+	<% next if %w(id _id created_at _created_at _type).include?(@p.to_s) %>
 	<tr>
-		<td class="left-col"><%= p.name.to_s.titleize %> <small>(<%= p.class.name.to_s.gsub("DataMapper::Property::",'') || 'Enum' %>)</small></td>
+		<td class="left-col"><%= @p.to_s.titleize %> <small>(<%= @p.class.name.to_s.gsub("DataMapper::Property::",'') %>)</small></td>
 		<td class="right-col"><%= partial(:field) %></td>
 	</tr>
 	<% end %>
-	<% end %>
-</table>
 
-<p class="submit">
-	<input type="submit" value="Submit" />
-</p>
+	</table>
+
+	<p class="submit">
+		<input type="submit" value="Submit" />
+	</p>
 
 </form>
