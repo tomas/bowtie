@@ -89,9 +89,14 @@ class Class
 	end
 
 	def model_associations
-		h = {}
-		relationships.map {|r| h[r.name] = r }
-		h
+		return [] if relationships.nil? or relationships.empty?
+		if relationships.first.is_a?(Array)
+			return relationships
+		else
+			h = {}
+			relationships.map {|r| h[r.name] = r }
+			return h
+		end
 	end
 
 	def field_names
