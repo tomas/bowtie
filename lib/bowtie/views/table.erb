@@ -3,6 +3,7 @@
 			<tr>
 			<th title="<%= @model.primary_key %>" class="<%= @model.primary_key %>-col"><%= @model.primary_key.to_s.upcase %></th>
 
+			<!-- filter id, _type and associations -->
 			<% @resources.first.attributes.each do |k, v| %>
 				<% next if k.to_s == 'id' or k.to_s[/id$/] or k == '_type' or v.class == Array %>
 				<th title="<%= v.class.to_s %>" class="<%= k.to_s %>-col"><%= k.to_s.titleize %></th>

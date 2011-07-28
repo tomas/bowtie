@@ -5,6 +5,7 @@
 
 	<table>
 
+	<!-- filter id and created at fields. association ids pass -->
 	<% @resource.class.field_names.each do |@p| %>
 	<% next if %w(id _id created_at _created_at _type).include?(@p.to_s) %>
 	<tr>
