@@ -11,7 +11,6 @@ class City
 	one :major
 
 	key :name, String, :required => true
-
 end
 
 class Major
@@ -41,16 +40,3 @@ class Cinema < Place
   # property :number_of_movies, Integer  
 end
 
-def add_places!(city)
-	# Place.delete_all
-	city.places << Cinema.create(:name => "Busterblock", :address => "234 Mission St")
-	city.places << Restaurant.create(:name => "Freddo's", :address => "123 Park Lane")
-	city.save
-end
-
-city = City.create(:name => "SF222O2222")
-major = Major.create(:name => "John Lennon X")
-city.major = major
-major.save
-
-add_places!(city)
