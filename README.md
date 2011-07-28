@@ -8,34 +8,34 @@ Bowtie reads the information on your models and creates a nice panel in which yo
 
 Include it in your Gemfile and update your bundle:
 
-  source 'rubygems.org'
-  ..
-  gem 'bowtie'
+    source 'rubygems.org'
+    ..
+    gem 'bowtie'
   
 Or install it by hand:
 
-  $ gem install bowtie
+    $ gem install bowtie
 
 ### Configuration
 
 Mount Bowtie wherever you want by editing your config.ru file, after loading your models. You can optionally include the admin/pass combination for the panel.
 
-  require 'my_models'
-  require 'bowtie'
+    require 'my_models'
+    require 'bowtie'
 
-  BOWTIE_AUTH = {:user => 'admin', :pass => '12345' }
+    BOWTIE_AUTH = {:user => 'admin', :pass => '12345' }
 
-  app = Rack::Builder.new {
-    map "/admin" do
-      run Bowtie::Admin
-    end
+    app = Rack::Builder.new {
+      map "/admin" do
+        run Bowtie::Admin
+      end
 
-    map '/' do
-      run MyApp
-    end
-  }
+      map '/' do
+        run MyApp
+      end
+    }
 
-  run app
+    run app
 
 Now you can go to /admin in your app's path and try out Bowtie using your user/pass combination. If not set, it defaults to admin/bowtie.
 
