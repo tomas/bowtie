@@ -6,17 +6,16 @@
 			<!-- filter id, _type and associations -->
 			<% @resources.first.attributes.each do |k, v| %>
 				<% next if k.to_s == 'id' or k.to_s[/id$/] or k == '_type' or v.class == Array %>
-				<th title="<%= v.class.to_s %>" class="<%= k.to_s %>-col"><%= k.to_s.titleize %></th>
+				<th title="<%= v.class %>" class="<%= k.to_s %>-col <%= v.class.name.downcase %>"><%= k.to_s.titleize %></th>
 			<% end %>
 
 			<% unless params[:association] %>
-			<% @resources.first.class.associations.each do |rel_name, assoc| %>
-				<% next if Bowtie.belongs_to_association?(assoc) %>
+			<% @resources.first.class.model_associations.each do |rel_name, assoc| %>
 				<%= render_assoc_header(rel_name, assoc) %>
 			<% end %>
 			<% end %>
 
-			<th class="actions" colspan="3">&nbsp;</th>
+			<th class="actions" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 

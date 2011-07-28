@@ -1,21 +1,20 @@
 <tr id="resource-<%= @r.primary_key.to_s %>" class="<%= @r.state.to_s if @r.respond_to?(:state) %>">
 	<td class="<%= @model.primary_key %>-col"><a href="<%= url_for(@r) %>"><%= @r.primary_key %></a></td>
-	<% @r.attributes.each do |k, v| %>
 
+	<% @r.attributes.each do |k, v| %>
 		<% next if k == @model.primary_key or k.to_s[/id$/] or k == '_type' %>
-		<td class="<%= k %>-col editable"><%= truncate(v, 64) || 'nil' %></td>
-		<% end %>
+		<td class="<%= k %>-col <%= k.class.name.downcase %> editable"><%= truncate(v, 64) || 'nil' %></td>
+	<% end %>
 
 	<% unless params[:association] %>
-	<% @model.associations.each do |rel_name, assoc| %>
-		<% next if Bowtie.belongs_to_association?(assoc) %>
+	<% @model.model_associations.each do |rel_name, assoc| %>
 		<%= render_assoc_row(@r, rel_name, assoc) %>
 	<% end %>
 	<% end %>
 
-	<td><a href="<%= url_for(@r) %>">View</a></td>
+	<td class="view-col"><a href="<%= url_for(@r) %>">View</a></td>
 
-	<td>
+	<td class="delete-col">
 	<form class="destroy" method="post" action="<%= model_path(@r.class) %>/<%= @r.id %>" onsubmit="return confirm('Are you sure?');">
 		<input type="hidden" name="_method" value="delete" />
 		<button type="submit">Destroy</button>

@@ -43,7 +43,8 @@ module Bowtie
 
 		get '/search*' do
 			redirect('/' + params[:model] ||= '') if params[:q].blank?
-			@resources = Bowtie.search(params)
+			@resources = Bowtie.search(clean_params, params[:page])
+			@subtypes = model.subtypes
 			erb :index
 		end
 
@@ -91,6 +92,7 @@ module Bowtie
 		put "/:model/:id" do
 			if request.xhr? # dont pass through hooks or put the boolean stuff
 				# if Bowtie.update!(resource, params[:resource].normalize)
+				puts params[:resource].inspect
 				if Bowtie.update!(resource, params[:resource].filter_inaccessible_in(model).normalize)
 					resource.to_json
 				else

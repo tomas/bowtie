@@ -67,7 +67,7 @@ class Hash
 
 	# this is for checkboxes which give us a param of 'on' on the params hash
 	def normalize
-		replacements = { 'on' => true, '' => nil}
+		replacements = { 'on' => true, '' => nil, 'true' => true, 'false' => false}
 		normalized = {}
 		self.each_pair do |key,val|
 			normalized[key] = replacements.has_key?(val) ? replacements[val] : val

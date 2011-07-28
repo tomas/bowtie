@@ -70,14 +70,18 @@ module Bowtie
 		end
 
 		def render_assoc_header(rel_name, assoc)
-			"<th title='#{assoc.class.name.to_s.gsub('DataMapper::Associations::','')}' class='rel #{rel_name }-col'>#{rel_name.to_s.titleize}</th>"
+			"<th title='#{assoc.class.name.to_s[/.*::(.*)$/, 1]}' class='rel-col #{rel_name}-col'>#{rel_name.to_s.titleize}</th>"
 		end
 		
 		def render_assoc_row(r, rel_name, assoc)
-			html = "<td class='rel #{rel_name.to_s}-col'>"
+			html = "<td class='rel-col #{rel_name.to_s}-col'>"
 			html += "<a href='#{model_path}/#{r.id}/#{rel_name.to_s}'>"
-			html += Bowtie.has_one_association?(assoc) ? "View #{rel_name.to_s}" : r.send(rel_name).count.to_s
-			html += "</a>"
+			if Bowtie.has_one_association?(assoc) || Bowtie.belongs_to_association?(assoc)
+				html += (r.send(rel_name).nil? ? 'nil' : "View #{rel_name.to_s}")
+			else
+				html += r.send(rel_name).count.to_s
+			end
+			html += "</a></td>"
 		end
 
 	end

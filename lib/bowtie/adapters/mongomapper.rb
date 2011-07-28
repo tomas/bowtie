@@ -6,7 +6,7 @@ module Bowtie
 #		models
 	end
 
-	def self.search
+	def self.search(params, page)
 		puts "Search not implemented yet in MongoMapper!"
 		return []
 	end
@@ -72,13 +72,11 @@ module Bowtie
 end
 
 class Object
+
 	def primary_key
 		send(self.class.primary_key)
 	end
-	
-	def field_names
-		self.class.field_names
-	end
+
 end
 
 class Class
@@ -87,8 +85,12 @@ class Class
 		'id'
 	end
 
+	def model_associations
+		associations
+	end
+
 	def field_names
-		self.keys.keys
+		self.keys.keys.collect { |f| f.to_sym }
 	end
 
 	def boolean_fields

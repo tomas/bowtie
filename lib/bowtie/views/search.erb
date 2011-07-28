@@ -4,5 +4,5 @@
 		<% next if ['splat', 'q', 'page'].include?(k) or v == '' %>
 			<input type="hidden" name="<%= k %>" value="<%= v %>" />
 		<% end %>
-		<input type="text" name="q"  value="Find <%= model %>:" onfocus="if(this.value=='Find <%= model %>:')this.value='';" onblur="if(this.value=='')this.value='Find <%= model %>:';"/>
+		<input type="text" name="q"  value="<%= params[:q] || 'Find ' + model + ':' %>" onfocus="if(this.value=='Find <%= model %>:')this.value='';" onblur="if(this.value=='')this.value='Find <%= model %>:';"/>
 	</form>

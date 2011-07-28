@@ -4,16 +4,16 @@ module Bowtie
 		DataMapper::Model.descendants.to_a
 	end
 
-	def self.search
+	def self.search(params, page)
 		query1, query2 = [], []
-		clean_params.each do |key, val|
+		params.each do |key, val|
 			query1 << "#{model}.all(:#{key} => '#{val}')"
 		end
 		model.searchable_fields.each do |field|
 			query2 << "#{model}.all(:#{field}.like => '%#{params[:q]}%')"
 		end
 		query = query1.any? ? [query1.join(' & '), query2.join(' + ')].join(' & ') : query2.join(' + ')
-		@resources = eval(query).page(params[:page], :per_page => PER_PAGE)
+		@resources = eval(query).page(page, :per_page => PER_PAGE)
 		@subtypes = model.subtypes
 	end
 
@@ -50,11 +50,11 @@ module Bowtie
 	end
 	
 	def self.belongs_to_association?(assoc)
-		assoc.class.name =~ /ManyTo/
+		assoc.class == DataMapper::Associations::ManyToOne::Relationship
 	end
 
 	def self.has_one_association?(assoc)
-		assoc.class.name =~ /OneToOne/
+		assoc.class == DataMapper::Associations::OneToOne::Relationship
 	end
 
 	module Helpers
@@ -88,8 +88,10 @@ class Class
 		key.first.name
 	end
 
-	def associations
-		relationships
+	def model_associations
+		h = {}
+		relationships.map {|r| h[r.name] = r }
+		h
 	end
 
 	def field_names
