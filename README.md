@@ -1,8 +1,10 @@
 ### Bowtie: Zeroconf admin scaffold for your MongoMapper & DataMapper models
 
-![Bowtie!](https://github.com/tomas/bowtie/raw/master/screenshot.png)
-
 Bowtie reads the information on your models and creates a nice panel in which you can view, edit and destroy records easily.
+
+### How does it look?
+
+![Bowtie!](https://github.com/tomas/bowtie/raw/master/screenshot.png)
 
 ### Installation
 
