@@ -24,7 +24,7 @@ module Bowtie
 	end
 
 	def self.get_associated(model, params)
-		model.find(params[:id]).send(params[:association].to_s)
+		model.find(params[:id]).send(params[:association])
 	end
 
 	def self.add_paging(resources, page)

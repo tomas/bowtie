@@ -76,7 +76,7 @@ module Bowtie
 			@title = "#{params[:association].titleize} for #{model.to_s.titleize} ##{params[:id]}"
 			res = Bowtie.get_associated(model, params)
 
-			redirect('/' + model.linkable + '?error=doesnt+exist') if res.nil? or (res.is_a?(Array) and res.count == 0)
+			redirect('/' + model.linkable + '?error=doesnt+exist') if res.nil? or (res.is_a?(Array) and res.empty?)
 
 			if res.is_a?(Array)
 				@resources = Bowtie.add_paging(res, params[:page])
