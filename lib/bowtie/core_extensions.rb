@@ -1,15 +1,22 @@
-class String
+# if we have active support, lets use it
+# otherwise add the few needed methods to avoid loading it
 
-	def titleize
-		self.capitalize.gsub('_',' ')
-	end
+unless defined?(ActiveSupport::Inflector)
 
-	def singularize
-		self.gsub(/ies/,'y').gsub(/s$/, '')
-	end
+	class String
 
-	def pluralize
-		self.gsub(/y$/,'ie') + "s"
+		def titleize
+			self.capitalize.gsub('_',' ')
+		end
+
+		def singularize
+			self.gsub(/ies/,'y').gsub(/s$/, '')
+		end
+
+		def pluralize
+			self.gsub(/y$/,'ie') + "s"
+		end
+
 	end
 
 end
