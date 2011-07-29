@@ -1,9 +1,9 @@
 <tr id="resource-<%= @r.primary_key.to_s %>" class="<%= @r.state.to_s if @r.respond_to?(:state) %>">
 	<td class="<%= @model.primary_key %>-col"><a href="<%= url_for(@r) %>"><%= @r.primary_key %></a></td>
 
-	<% @r.attributes.each do |k, v| %>
-		<% next if k == @model.primary_key or k.to_s[/id$/] or k == '_type' %>
-		<td class="<%= k %>-col <%= k.class.name.downcase %> editable"><%= truncate(v, 64) || 'nil' %></td>
+	<% @model.field_names.each do |f| %>
+		<% next if f == @model.primary_key or f.to_s[/_id$/] or f.to_s == '_type' %>
+		<td class="<%= f %>-col editable"><%= truncate(@r.send(f), 64) || 'nil' %></td>
 	<% end %>
 
 	<% unless params[:association] %>

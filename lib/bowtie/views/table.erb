@@ -3,14 +3,13 @@
 			<tr>
 			<th title="<%= @model.primary_key %>" class="<%= @model.primary_key %>-col"><%= @model.primary_key.to_s.upcase %></th>
 
-			<!-- filter id, _type and associations -->
-			<% @resources.first.attributes.each do |k, v| %>
-				<% next if k.to_s == 'id' or k.to_s[/id$/] or k == '_type' or v.class == Array %>
-				<th title="<%= v.class %>" class="<%= k.to_s %>-col <%= v.class.name.downcase %>"><%= k.to_s.titleize %></th>
+			<% @model.field_names.each do |f| %>
+				<% next if f == @model.primary_key or f.to_s[/_id$/] or f.to_s == '_type' %>
+				<th class="<%= f.to_s %>-col"><%= f.to_s.titleize %></th>
 			<% end %>
 
 			<% unless params[:association] %>
-			<% @resources.first.class.model_associations.each do |rel_name, assoc| %>
+			<% @model.model_associations.each do |rel_name, assoc| %>
 				<%= render_assoc_header(rel_name, assoc) %>
 			<% end %>
 			<% end %>
