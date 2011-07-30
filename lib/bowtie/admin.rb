@@ -33,7 +33,7 @@ module Bowtie
 		end
 
 		get '/' do
-		  # redirect '' results in an endless redirect on the current version of sinatra/rack
+			# redirect '' results in an endless redirect on the current version of sinatra/rack
 			redirect '/' + @models.first.linkable
 		end
 
@@ -92,7 +92,6 @@ module Bowtie
 		put "/:model/:id" do
 			if request.xhr? # dont pass through hooks or put the boolean stuff
 				# if Bowtie.update!(resource, params[:resource].normalize)
-				puts params[:resource].inspect
 				if Bowtie.update!(resource, params[:resource].filter_inaccessible_in(model).normalize)
 					resource.to_json
 				else

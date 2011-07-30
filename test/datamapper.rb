@@ -18,7 +18,7 @@ class City
 end
 
 class Major
-  include DataMapper::Resource
+	include DataMapper::Resource
 
 	belongs_to :city
 
@@ -31,11 +31,11 @@ class Place
 
 	belongs_to :city
 
-  property :id, Serial
-  property :name, String, :required => true
-  property :address, String
-  property :open_on_sundays, Boolean, :default => true
-  property :created_at, DateTime
+	property :id, Serial
+	property :name, String, :required => true
+	property :address, String
+	property :open_on_sundays, Boolean, :default => true
+	property :created_at, DateTime
 end
 
 class Restaurant < Place

@@ -72,6 +72,7 @@ module Bowtie
 end
 
 class Object
+
 	def primary_key
 		send(self.class.primary_key)
 	end
