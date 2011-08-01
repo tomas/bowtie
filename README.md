@@ -1,8 +1,10 @@
-## Bowtie: Zeroconf admin scaffold for your MongoMapper & DataMapper models
+## Bowtie: Simple admin scaffold for your MongoMapper & DataMapper models
 
 Bowtie reads the information on your models and creates a nice panel in which you can view, edit and destroy records easily.
 
 ## How does it look?
+
+Glad you asked:
 
 ![Bowtie!](https://github.com/tomas/bowtie/raw/master/screenshot.png)
 
@@ -16,7 +18,7 @@ Include it in your Gemfile and update your bundle:
   
 Or install it by hand:
 
-    $ gem install bowtie
+    $ (sudo) gem install bowtie
 
 ## Configuration
 
@@ -25,19 +27,15 @@ Mount Bowtie wherever you want by editing your config.ru file, after loading you
     require 'my_app' # models are loaded
     require 'bowtie'
 
-    BOWTIE_AUTH = {:user => 'admin', :pass => '12345' }
+    BOWTIE_AUTH = {:user => 'admin', :pass => '12345'}
 
-    app = Rack::Builder.new {
-      map "/admin" do
-        run Bowtie::Admin
-      end
+    map "/admin" do
+      run Bowtie::Admin
+    end
 
-      map '/' do
-        run MyApp
-      end
-    }
-
-    run app
+    map '/' do
+      run MyApp
+    end
 
 Now you can go to /admin in your app's path and try out Bowtie using your user/pass combination. If not set, it defaults to admin/bowtie.
 
@@ -55,13 +53,9 @@ For DataMapper models:
 For MongoMapper models:
  
  * mongo_mapper
+ * bson_ext (not required, but recommended)
 
-From version 0.3, Bowtie is meant to be used from DataMapper 1.0.0 on. For previous versions please install with -v=0.2.5.
-
-## TODO
-
- * Better handling of types (Text, JSON, IPAddress) in #show
- * Better handling of relationships in #show
+From version 0.3, Bowtie is meant to be used from DataMapper 1.0.0 on. For previous versions of DM please install with -v=0.2.5.
 
 ## Copyright
 
