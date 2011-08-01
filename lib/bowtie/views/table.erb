@@ -19,7 +19,8 @@
 		</thead>
 
 		<tbody>
-		<% @resources.each do |@r| %>
+		<% @resources.each do |r| %>
+			<% @r = r %>
 			<%= partial(:row) %>
 		<% end %>
 		</tbody>
