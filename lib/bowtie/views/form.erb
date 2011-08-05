@@ -1,17 +1,21 @@
-<form class="resource" method="post" action="<%= model_path(@resource.class) %><%= '/' + @resource.id.to_s if @resource.id %>">
-<%= '<input type="hidden" name="_method" value="put">' if @resource.id %>
+<% if @resource.new? %>
+	<form class="resource" method="post" action="<%= model_path(@resource.class) %>">
+<% else %>
+	<form class="resource" method="post" action="<%= model_path(@resource.class) %>/<%= @resource.id %>">
+	<input type="hidden" name="_method" value="put">
+<% end %>
 
 <%= partial(:errors) %>
 
 	<table>
 
-	<!-- filter id and created at fields. association ids pass -->
-	<% @resource.class.field_names.each do |@p| %>
-	<% next if %w(id _id created_at _created_at _type).include?(@p.to_s) %>
-	<tr>
-		<td class="left-col"><%= @p.to_s.titleize %> <small>(<%= @p.class.name.to_s.gsub("DataMapper::Property::",'') %>)</small></td>
-		<td class="right-col"><%= partial(:field) %></td>
-	</tr>
+	<% @resource.class.field_names.each do |p| %>
+		<% @p = p %>	
+		<% next if %w(id _id created_at _created_at _type).include?(@p.to_s) %>
+		<tr>
+			<td class="left-col"><%= @p.to_s.titleize %> <small>(<%= @p.class.name.to_s.gsub("DataMapper::Property::",'') %>)</small></td>
+			<td class="right-col"><%= partial(:field) %></td>
+		</tr>
 	<% end %>
 
 	</table>
