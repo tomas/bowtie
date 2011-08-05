@@ -13,7 +13,7 @@
 		<% @p = p %>	
 		<% next if %w(id _id created_at _created_at _type).include?(@p.to_s) %>
 		<tr>
-			<td class="left-col"><%= @p.to_s.titleize %> <small>(<%= @p.class.name.to_s.gsub("DataMapper::Property::",'') %>)</small></td>
+			<td class="left-col"><%= @p.to_s %> <small>(<%= @resource.send(p).class.name %>)</small></td>
 			<td class="right-col"><%= partial(:field) %></td>
 		</tr>
 	<% end %>

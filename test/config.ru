@@ -1,6 +1,6 @@
 current_path = File.expand_path(File.dirname(__FILE__))
 
-adapter = ARGV[1] || 'datamapper'
+adapter = ARGV[1] || 'mongomapper'
 
 require current_path + "/#{adapter}"
 require current_path + '/demo_data'

@@ -1,6 +1,5 @@
 <%=
 
-	html =''
 	name = @p
 	begin
 		value = @resource.send(@p)
@@ -8,17 +7,12 @@
 		value = ''
 	end
 
-	case @p.class.to_s.gsub("DataMapper::Property::",'')
-		when "Array", /Class/ # weird how datamapper names enum classes
-			html += '<select class="array" name="resource['+name+']">'
-			@resource.model.options_for_subtype(name.to_sym).each do |option|
-				selected = value.to_s == option.to_s ? 'selected="selected"' : ''
-				html += '<option value="'+option.to_s+'" '+selected+'>'+option.to_s.titleize+'</option>'
-			end
-			html += '</select>'
+	html =''
+
+	case value.class.name
 		when "TrueClass", "FalseClass", /Boolean/
 			checked = value == true ? 'checked="checked"' : ''
-			html += '<input name="resource['+name+']" type="checkbox" '+checked+' />'
+			html += '<input name="resource['+name.to_s+']" type="checkbox" '+checked+' />'
 		else
 			html += '<input class="string" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
 	end
