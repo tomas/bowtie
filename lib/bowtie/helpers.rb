@@ -79,7 +79,7 @@ module Bowtie
 			if Bowtie.has_one_association?(assoc) || Bowtie.belongs_to_association?(assoc)
 				html += (r.send(rel_name).nil? ? 'nil' : "View #{rel_name.to_s}")
 			else
-				html += r.send(rel_name).count.to_s
+				html += Bowtie.get_count(r, rel_name).to_s
 			end
 			html += "</a></td>"
 		end

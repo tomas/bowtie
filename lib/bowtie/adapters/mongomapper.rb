@@ -48,6 +48,10 @@ module Bowtie
 		assoc.class == MongoMapper::Plugins::Associations::OneAssociation
 	end
 
+	def self.get_count(record, association)
+		record.send(association).count
+	end
+
 	module Helpers
 
 		def total_entries(resources)

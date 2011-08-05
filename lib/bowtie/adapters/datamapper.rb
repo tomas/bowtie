@@ -57,6 +57,18 @@ module Bowtie
 		assoc.class == DataMapper::Associations::OneToOne::Relationship
 	end
 
+	# i have to say this: datamapper sucks. when calling record.association.count 
+	# it actually fetches all the records, builds an array and then calls count on
+	# that array.
+	def self.get_count(record, association)
+		association_key = "#{record.class.name.downcase}_#{record.class.primary_key}"
+		begin
+			repository.adapter.select("select count(*) from #{association} where #{association_key} = ?", record.primary_key) 
+		rescue DataObjects::SQLError => e # probably has_many :through => association
+			''
+		end
+	end
+
 	module Helpers
 
 		def total_entries(resources)

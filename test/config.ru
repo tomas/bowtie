@@ -1,6 +1,6 @@
 current_path = File.expand_path(File.dirname(__FILE__))
 
-adapter = ARGV[1] || 'mongomapper'
+adapter = ARGV[1] || 'datamapper'
 
 require current_path + "/#{adapter}"
 require current_path + '/demo_data'
@@ -8,13 +8,8 @@ require current_path + '/../lib/bowtie'
 
 add_demo_data!
 
-app = Rack::Builder.new {
-
+map "/admin" do
 	# BOWTIE_AUTH = {:user => 'admin', :pass => 'secret'}
+	run Bowtie::Admin
+end
 
-	map "/admin" do
-		run Bowtie::Admin
-	end
-}
-
-run app
