@@ -9,10 +9,10 @@ module Bowtie
 		# requests, redirects
 
 		def deliver_file
-			file = File.expand_path(File.dirname(__FILE__)) + "/public/#{@env['PATH_INFO']}"
-			return false unless File.exist?(file)
-			content_type(Rack::Mime::MIME_TYPES[File.extname(file)], :charset => 'utf-8')
-			File.read(file)
+			path = File.expand_path(File.dirname(__FILE__)) + "/public#{@env['PATH_INFO']}"
+			return false unless File.exist?(path)
+			content_type(Rack::Mime::MIME_TYPES[File.extname(path)], :charset => 'utf-8')
+			File.read(path)
 		end
 
 		def redirect(uri, *args)
@@ -20,14 +20,14 @@ module Bowtie
 		end
 
 		def clean_params
-				@env['rack.request.query_hash'].delete_if{|a,b| %w(model page notice error q).include?(a) }
+			@env['rack.request.query_hash'].delete_if{|a,b| %w(model page notice error q).include?(a) }
 		end
 
 		# models, resources
 
-		def get_model_class
+		def get_model_class(mod = params[:model])
 			begin
-				Kernel.const_get(params[:model].singularize.capitalize)
+				Kernel.const_get(mod.singularize.capitalize)
 			rescue NameError
 				halt 404, "Model not found!"
 			end
@@ -72,7 +72,7 @@ module Bowtie
 		def render_assoc_header(rel_name, assoc)
 			"<th title='#{assoc.class.name.to_s[/.*::(.*)$/, 1]}' class='rel-col #{rel_name}-col'>#{rel_name.to_s.titleize}</th>"
 		end
-		
+
 		def render_assoc_row(r, rel_name, assoc)
 			html = "<td class='rel-col #{rel_name.to_s}-col'>"
 			html += "<a href='#{model_path}/#{r.id}/#{rel_name.to_s}'>"

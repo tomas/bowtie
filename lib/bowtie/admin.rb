@@ -28,7 +28,7 @@ module Bowtie
 			@models = Bowtie.models
 		end
 
-		get '/*.js|css|png|jpg' do
+		get '/*.js|css|png|jpg|ico' do
 			deliver_file or status 404
 		end
 
@@ -42,8 +42,8 @@ module Bowtie
 		end
 
 		get '/search*' do
-			redirect('/' + params[:model] ||= '') if params[:q].blank?
-			@resources = Bowtie.search(clean_params, params[:page])
+			redirect('/' + params[:model] ||= '') if params[:q].nil? or params[:q].empty?
+			@resources = Bowtie.search(model, params[:q], params[:page])
 			@subtypes = model.subtypes
 			erb :index
 		end
@@ -77,6 +77,7 @@ module Bowtie
 			@title = "#{params[:association].titleize} for #{model.to_s.titleize} ##{params[:id]}"
 			res = Bowtie.get_associated(model, params)
 
+			@model = get_model_class(params[:association])
 			redirect('/' + model.linkable + '?error=doesnt+exist') if res.nil? or (res.is_a?(Array) and res.empty?)
 
 			if res.is_a?(Array)

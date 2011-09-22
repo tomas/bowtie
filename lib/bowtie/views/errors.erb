@@ -1,6 +1,4 @@
-<% begin
-
-if @resource and @resource.errors.any? %>
+<% if @resource and @resource.errors.any? %>
 
 <div class="errorlist">
 
@@ -12,8 +10,4 @@ if @resource and @resource.errors.any? %>
 
 </div>
 
-<% end
-
-rescue NoMethodError => e
-	# dm-validations not included
-end %>
+<% end %>

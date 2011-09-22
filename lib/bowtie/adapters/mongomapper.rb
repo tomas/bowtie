@@ -6,9 +6,12 @@ module Bowtie
 #		models
 	end
 
-	def self.search(params, page)
-		puts "Search not implemented yet in MongoMapper!"
-		return []
+	def self.search(model, q, page)
+		res = []
+		model.searchable_fields.each do |field|
+			res = res + model.all(field.to_sym => /#{q}/i)
+		end
+		res.uniq
 	end
 
 	def self.get_many(model, params, page)
@@ -16,7 +19,7 @@ module Bowtie
 	end
 
 	def self.get_one(model, id)
-		model.find(id) 
+		model.find(id)
 	end
 
 	def self.create(model, params)
@@ -43,7 +46,7 @@ module Bowtie
 	def self.belongs_to_association?(assoc)
 		assoc.class == MongoMapper::Plugins::Associations::BelongsToAssociation
 	end
-	
+
 	def self.has_one_association?(assoc)
 		assoc.class == MongoMapper::Plugins::Associations::OneAssociation
 	end
@@ -105,7 +108,7 @@ class Class
 
 	def searchable_fields
 		s = []
-		self.keys.each {|k,v| s << k if v.type == String}
+		self.keys.each {|k,v| s << k if v.type == String && k != "_type"}
 		s.compact
 	end
 
