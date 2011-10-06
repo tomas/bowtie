@@ -15,6 +15,7 @@ class City
 
 	property :id, Serial
 	property :name, String, :required => true
+	property :locality, String
 end
 
 class Major
@@ -23,7 +24,8 @@ class Major
 	belongs_to :city
 
 	property :id, Serial
-	property :name, String
+	property :first_name, String
+	property :last_name, String
 end
 
 class Place

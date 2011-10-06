@@ -5,11 +5,11 @@ module Bowtie
 	end
 
 	def self.search(model, q, page)
-		query = {}
+		query = []
 		model.searchable_fields.each do |field|
-			query[field.like] = "%#{q}%"
+			query << "#{model}.all(:#{field}.like => '%#{q}%')"
 		end
-		model.all(query).page(page, :per_page => PER_PAGE)
+		eval(query.join(' + ')).page(page, :per_page => PER_PAGE)
 	end
 
 	def self.get_many(model, params, page)

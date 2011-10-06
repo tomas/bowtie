@@ -11,6 +11,7 @@ class City
 	one :major
 
 	key :name, String, :required => true
+	key :locality, String
 end
 
 class Major
@@ -18,7 +19,8 @@ class Major
 
   belongs_to :city
 
-  key :name, String
+  key :first_name, String
+  key :last_name, String
 end
 
 class Place
@@ -37,6 +39,5 @@ class Restaurant < Place
 end
 
 class Cinema < Place
-  # property :number_of_movies, Integer  
+  # property :number_of_movies, Integer
 end
-

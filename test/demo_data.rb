@@ -4,8 +4,8 @@ def add_places!(city)
 end
 
 def add_demo_data!
-	city = City.create(:name => "Shangri-La")
-	major = Major.create(:name => "John Lennon")
+	city = City.create(:name => "Shangri-La", :locality => "Wherever")
+	major = Major.create(:first_name => "John", :last_name => "Lennon")
 	city.major = major
 	major.save
 	add_places!(city)
