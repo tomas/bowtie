@@ -78,7 +78,7 @@ module Bowtie
 			res = Bowtie.get_associated(model, params)
 
 			@model = get_model_class(params[:association])
-			redirect('/' + model.linkable + '?error=doesnt+exist') if res.nil? or (res.is_a?(Array) and res.empty?)
+			redirect referer + '?error=doesnt+exist' if res.nil? or (res.is_a?(Array) and res.empty?)
 
 			if res.is_a?(Array)
 				@resources = Bowtie.add_paging(res, params[:page])

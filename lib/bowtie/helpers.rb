@@ -18,6 +18,10 @@ module Bowtie
 		def redirect(uri, *args)
 			super base_path + uri.downcase, *args
 		end
+		
+		def referer
+			URI.parse(@env['HTTP_REFERER']).path.sub("#{base_path}", '')
+		end
 
 		def clean_params
 			@env['rack.request.query_hash'].delete_if{|a,b| %w(model page notice error q).include?(a) }
