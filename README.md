@@ -52,7 +52,7 @@ Additionally you need to make sure that all models have been loaded because Rail
         require path
     end
 
-### Try it out
+### Try it out!
 Now you can go to /admin in your app's path and try out Bowtie using your user/pass combination. If not set, it defaults to admin/bowtie.
 
 ## Important notes
