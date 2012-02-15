@@ -22,6 +22,7 @@ Or install it by hand:
 
 ## Configuration
 
+### Sinatra
 Mount Bowtie wherever you want by editing your `config.ru` file, after loading your models. You can optionally include the admin/pass combination for the panel.
 
     require 'my_app' # models are loaded
@@ -34,6 +35,21 @@ Mount Bowtie wherever you want by editing your `config.ru` file, after loading y
 
     map '/' do
       run MyApp
+    end
+
+### Rails 3
+Mount Bowtie in your `config/routes.rb` file with the new Rails 3 mount function. You can also optionally include the admin/pass combination for the panel.
+
+    Rails::Application.routes.draw.do
+        # your other routes
+        BOWTIE_AUTH = {:user => 'admin', :pass => '12345'}
+        mount Bowtie::Admin, :at => '/admin'
+    end
+
+Additionally you need to make sure that all models have been loaded because Rails only models them on demand and Bowtie only sees loaded models. Paste this into a new initializer `config/initializers/bowtie.rb`
+
+    Dir[Rails.root + 'app/models/**/*.rb'].each do |path|
+        require path
     end
 
 Now you can go to /admin in your app's path and try out Bowtie using your user/pass combination. If not set, it defaults to admin/bowtie.
