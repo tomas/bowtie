@@ -22,14 +22,14 @@ Or install it by hand:
 
 ## Configuration
 
-Mount Bowtie wherever you want by editing your config.ru file, after loading your models. You can optionally include the admin/pass combination for the panel.
+### Sinatra
+Mount Bowtie wherever you want by editing your `config.ru` file, after loading your models. You can optionally include the admin/pass combination for the panel.
 
     require 'my_app' # models are loaded
     require 'bowtie'
 
-    BOWTIE_AUTH = {:user => 'admin', :pass => '12345'}
-
     map "/admin" do
+      BOWTIE_AUTH = {:user => 'admin', :pass => '12345'}
       run Bowtie::Admin
     end
 
@@ -37,11 +37,32 @@ Mount Bowtie wherever you want by editing your config.ru file, after loading you
       run MyApp
     end
 
+### Rails 3
+Mount Bowtie in your `config/routes.rb` file with the new Rails 3 mount function. You can also optionally include the admin/pass combination for the panel.
+
+    Rails::Application.routes.draw.do
+        # your other routes
+        BOWTIE_AUTH = {:user => 'admin', :pass => '12345'}
+        mount Bowtie::Admin, :at => '/admin'
+    end
+
+Additionally you need to make sure that all models have been loaded because Rails only models them on demand and Bowtie only sees loaded models. Paste this into a new initializer `config/initializers/bowtie.rb`
+
+    Dir[Rails.root + 'app/models/**/*.rb'].each do |path|
+        require path
+    end
+
+### Try it out!
 Now you can go to /admin in your app's path and try out Bowtie using your user/pass combination. If not set, it defaults to admin/bowtie.
 
 ## Important notes
 
 Bowtie requires a few gems but they're not included in the gemspec to prevent forcing your from installing unneeded gems. Therefore you need to make sure that Bowtie will have the following gems to work with: 
+
+For MongoMapper models:
+ 
+ * mongo_mapper
+ * bson_ext (not required, but recommended)
 
 For DataMapper models: 
 
@@ -50,13 +71,8 @@ For DataMapper models:
  * dm-aggregates
  * dm-pager
 
-For MongoMapper models:
- 
- * mongo_mapper
- * bson_ext (not required, but recommended)
-
-From version 0.3, Bowtie is meant to be used from DataMapper 1.0.0 on. For previous versions of DM please install with -v=0.2.5.
+Note: From version 0.3, Bowtie is meant to be used from DataMapper 1.0.0 on. For previous versions of DM please install with -v=0.2.5.
 
 ## Copyright
 
-(c) 2010-2011 - Tomás Pollak for Fork Ltd. Released under the MIT license.
+(c) 2010-2012 - Tomás Pollak for Fork Ltd. Released under the MIT license.
