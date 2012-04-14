@@ -29,7 +29,11 @@ module Bowtie
 			begin
 				Kernel.const_get(mod.singularize.capitalize)
 			rescue NameError
-				halt 404, "Model not found!"
+				begin
+					Kernel.const_get(mod.capitalize)
+				rescue NameError
+					halt 404, "Model not found!"
+				end
 			end
 		end
 
