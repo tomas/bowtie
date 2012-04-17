@@ -2,6 +2,18 @@ module Bowtie
 
 	module Helpers
 
+		def app_name
+			defined?(APP_NAME) ? APP_NAME : ENV['APP_NAME'] || "Bowtie::#{adapter_name}"
+		end
+
+		def adapter_name
+			defined?(DataMapper) ? "DataMapper" : "MongoMapper"
+		end
+
+		def action_name
+			current_model.pluralize
+		end
+
 		def base_path
 			env['SCRIPT_NAME']
 		end
@@ -29,24 +41,30 @@ module Bowtie
 
 		# models, resources
 
+		def mappings
+			@mappings ||= get_mappings
+		end
+
+		def get_mappings
+			mappings = {}
+			Bowtie.models.collect{|m| mappings[m.linkable] = m }
+			mappings
+		end
+
 		def get_model_class(mod = params[:model])
-			begin
-				Kernel.const_get(mod.singularize.capitalize)
-			rescue NameError
-				halt 404, "Model not found!"
-			end
+			mappings[mod] or halt(404, "Model not found.")
 		end
 
 		def model
 			@model ||= get_model_class
 		end
 
-		def resource
-			Bowtie.get_one(model, params[:id]) or halt(404, 'Resource not found!')
-		end
-
 		def current_model
 			model
+		end
+
+		def resource
+			Bowtie.get_one(model, params[:id]) or halt(404, 'Resource not found!')
 		end
 
 		# views, paths
@@ -57,7 +75,11 @@ module Bowtie
 
 		def model_path(m = current_model)
 			string = m.name ||= m
-			base_path + '/' + string.to_s.pluralize.downcase
+			linkable_path(string.to_s.pluralize.downcase)
+		end
+
+		def linkable_path(linkable)
+			base_path + '/' + linkable
 		end
 
 		def url_for(resource)

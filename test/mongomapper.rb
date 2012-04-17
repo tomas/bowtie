@@ -5,7 +5,7 @@ MongoMapper.connection = Mongo::Connection.new('localhost')
 db = MongoMapper.database = 'bowtie_test'
 
 class City
-  include MongoMapper::Document
+	include MongoMapper::Document
 
 	many :places
 	one :major
@@ -15,23 +15,23 @@ class City
 end
 
 class Major
-  include MongoMapper::Document
-
-  belongs_to :city
-
-  key :first_name, String
-  key :last_name, String
-end
-
-class Place
-  include MongoMapper::Document
+	include MongoMapper::Document
 
 	belongs_to :city
 
-  key :name, String, :required => true
-  key :address, String
-  key :open_on_sundays, Boolean, :default => true
-  key :created_at, Time
+	key :first_name, String
+	key :last_name, String
+end
+
+class Place
+	include MongoMapper::Document
+
+	belongs_to :city
+
+	key :name, String, :required => true
+	key :address, String
+	key :open_on_sundays, Boolean, :default => true
+	key :created_at, Time
 end
 
 class Restaurant < Place
