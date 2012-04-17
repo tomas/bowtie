@@ -6,11 +6,9 @@ module Bowtie
 
 		use Rack::Auth::Basic do |username, password|
 			begin
-				user = ::BOWTIE_AUTH[:user]
-				pass = ::BOWTIE_AUTH[:pass]
+				user, pass = ::BOWTIE_AUTH[:user], ::BOWTIE_AUTH[:pass]
 			rescue NameError
-				user = 'admin'
-				pass = 'bowtie'
+				user, pass = 'admin', 'bowtie'
 			end
 			username == user && password == pass
 		end
@@ -23,22 +21,17 @@ module Bowtie
 			include Helpers
 		end
 
-		before do
-			@app_name = ENV['APP_NAME'] ? [self.class.name, ENV['APP_NAME']].join(' > ') : self.class.name
-			@models = Bowtie.models
-		end
-
 		get '/*.js|css|png|jpg|ico' do
 			deliver_file or status 404
 		end
 
 		get '/' do
 			# redirect '' results in an endless redirect on the current version of sinatra/rack
-			redirect '/' + @models.first.linkable
+			redirect '/' + mappings.keys.first
 		end
 
 		get '' do
-			redirect '/' + @models.first.linkable
+			redirect '/' + mappings.keys.first
 		end
 
 		get '/search*' do
