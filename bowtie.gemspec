@@ -4,9 +4,11 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tomás Pollak"]
+  s.email = %q{tomas@forkhq.com}
   s.date = %q{2012-04-16}
   s.description = %q{Simple admin scaffold for MongoMapper and DataMapper models.}
-  s.email = %q{tomas@forkhq.com}
+  s.rubyforge_project = %q{bowtie}
+  s.summary = %q{MongoMapper & DataMapper admin interface}
   s.extra_rdoc_files = [ "lib/bowtie.rb",
                          "lib/bowtie/admin.rb",
                          "lib/bowtie/core_extensions.rb",
@@ -40,9 +42,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/tomas/bowtie}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Bowtie", "--main", "README"]
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{bowtie}
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Bowtie Admin Scaffold}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
