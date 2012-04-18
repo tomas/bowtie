@@ -9,7 +9,7 @@ module Bowtie
 	def self.search(model, q, page)
 		res = []
 		model.searchable_fields.each do |field|
-			res = res + model.all(field.to_sym => /#{q}/i)
+			res = res + add_paging(model.where(field.to_sym => /#{q}/i), page).all
 		end
 		res.uniq
 	end
@@ -62,8 +62,9 @@ module Bowtie
 		end
 
 		def get_page(counter)
+			str = request.path["/search"] ? "&model=#{params[:model]}&q=#{params[:q]}" : ""
 			i = (params[:page].to_i || 0) + counter
-			i == 0 ? '' : "?page=#{i}"
+			i == 0 ? str : "?page=#{i}#{str}"
 		end
 
 		def show_pager(resources, path)

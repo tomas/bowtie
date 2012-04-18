@@ -71,7 +71,8 @@ module Bowtie
 		end
 
 		def show_pager(resources, path)
-			resources.pager.to_html(base_path + path) if resources.respond_to?(:pager)
+			q = request.path["/search"] ? "?model=#{params[:model]}&q=#{params[:q]}" : ""
+			s = resources.pager.to_html(base_path + path + q) if resources.respond_to?(:pager)
 		end
 
 	end
