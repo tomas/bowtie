@@ -141,6 +141,16 @@ module DataMapper::Resource
 
 end
 
-Bowtie.models.each do |mod|
-	mod.extend Bowtie::ClassMethods
+if Bowtie.models.empty? # models not loaded yet
+
+	class Class # need to figure out how to extend *only* DM models
+		include Bowtie::ClassMethods
+	end
+
+else
+
+	Bowtie.models.each do |mod|
+		mod.extend Bowtie::ClassMethods
+	end
+
 end
