@@ -1,16 +1,20 @@
 # if we have active support, lets use it
 # otherwise add the few needed methods to avoid loading it
 
-unless defined?(ActiveSupport::Inflector)
+begin
+
+	require 'active_support/inflections'
+
+	class String
+		include ActiveSupport::Inflections
+	end
+
+rescue
 
 	class String
 
 		def titleize
 			self.capitalize.gsub('_',' ')
-		end
-
-		def singularize
-			self.gsub(/ies/,'y').gsub(/s$/, '')
 		end
 
 		def pluralize
@@ -49,7 +53,7 @@ class Class
 	end
 
 	def pluralize
-		 self.to_s.pluralize
+		self.to_s.pluralize
 	end
 
 end
