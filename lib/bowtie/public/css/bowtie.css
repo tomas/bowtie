@@ -1,7 +1,7 @@
 /*
 CSS for Bowtie Datamapper Admin
 By Tomas Pollak - Fork Limited
-http://usefork.com
+http://forkhq.com
 ----------------------------------------- */
 
 *{
@@ -86,45 +86,45 @@ h2 { margin:10px 0; font-size:130%;}
 	-moz-border-top-left-radius: 6px;
 }
 
-#header ul li a:hover { 
+#header ul li a:hover {
 	background:#333;
 }
 
-#header ul li.current a { 
-	background: #528e00; 
-	font-weight:bold; 
+#header ul li.current a {
+	background: #528e00;
+	font-weight:bold;
 	color:#fff;
 }
 
-.subnav { 
-	padding: 2px 50px 7px 50px; 
-	background:#528e00; 
-	font-size:90%; 
-	margin: -20px -50px 20px; 
+.subnav {
+	padding: 2px 50px 7px 50px;
+	background:#528e00;
+	font-size:90%;
+	margin: -20px -50px 20px;
 }
 
-.subnav li { 
+.subnav li {
 	display:inline;
 }
 
-.subnav li a { 
-	color:#fff; 
-	text-decoration:none; 
-	margin-right:10px; 
-	display:inline-block; 
-	background:#89bf41; 
-	padding:5px; 
-	-webkit-border-radius:3px; 
+.subnav li a {
+	color:#fff;
+	text-decoration:none;
+	margin-right:10px;
+	display:inline-block;
+	background:#89bf41;
+	padding:5px;
+	-webkit-border-radius:3px;
 	-moz-border-radius:3px;
 }
 
-.subnav li.current a { 
-	background: #fff; 
-	font-weight:bold; 
+.subnav li.current a {
+	background: #fff;
+	font-weight:bold;
 	color:#528e00;
 }
 
-.subnav li a:active { 
+.subnav li a:active {
 	background:#8def08;
 }
 
