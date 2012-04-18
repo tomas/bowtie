@@ -3,7 +3,7 @@
 <%= partial(:search) %>
 <a class="edit-button" href="#" title="Enables in-place editing of editable fields" onclick="Bowtie.toggleEditableMode(this); return false;">Edit Mode OFF</a>
 
-<h1><%= total_entries(@resources) %> <%= @title || @model.name.pluralize %> <a href="<%= model_path %>/new">(new)</a></h1>
+<h1><%= total_entries(@resources) %> <%= @title || @model.name.pluralize %> <%= "containing '#{params[:q]}'" if params[:q] %> <a href="<%= model_path %>/new">(new)</a></h1>
 
 <% if @resources.any? %>
 
