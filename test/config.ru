@@ -6,7 +6,7 @@ require current_path + "/#{adapter}"
 require current_path + '/demo_data'
 require current_path + '/../lib/bowtie'
 
-add_demo_data! if City.count == 0
+add_demo_data! if Band.count == 0
 
 map "/admin" do
 	# BOWTIE_AUTH = {:user => 'admin', :pass => 'secret'}
