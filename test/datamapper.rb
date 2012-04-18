@@ -48,4 +48,8 @@ class Cinema < Place
 
 end
 
-DataMapper.auto_migrate!
+begin
+	City.count
+rescue DataObjects::SyntaxError
+	DataMapper.auto_migrate!
+end
