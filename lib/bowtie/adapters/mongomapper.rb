@@ -77,9 +77,51 @@ module Bowtie
 
 	end
 
+	module ClassMethods
+
+		def primary_key
+			'id'
+		end
+
+		def model_associations
+			associations
+		end
+
+		def field_names
+			self.keys.keys.collect { |f| f.to_sym }
+		end
+
+		def boolean_fields
+			s = []
+			self.keys.each {|k,v| s << k if v.type == Boolean}
+			s.compact
+		end
+
+		def searchable_fields
+			s = []
+			self.keys.each {|k,v| s << k if v.type == String && k != "_type"}
+			s.compact
+		end
+
+		def subtypes
+			s = []
+			self.keys.each {|k,v| s << k if v.type.class == Array}
+			s.compact
+		end
+
+		def options_for_subtype(field)
+			self.keys[field].type
+		end
+
+		def relation_keys_include?(key)
+			self.associations.map {|rel| true if key.to_sym == rel[0]}.reduce
+		end
+
+	end
+
 end
 
-class Object
+module MongoMapper::Document
 
 	def primary_key
 		send(self.class.primary_key)
@@ -87,44 +129,6 @@ class Object
 
 end
 
-class Class
-
-	def primary_key
-		'id'
-	end
-
-	def model_associations
-		associations
-	end
-
-	def field_names
-		self.keys.keys.collect { |f| f.to_sym }
-	end
-
-	def boolean_fields
-		s = []
-		self.keys.each {|k,v| s << k if v.type == Boolean}
-		s.compact
-	end
-
-	def searchable_fields
-		s = []
-		self.keys.each {|k,v| s << k if v.type == String && k != "_type"}
-		s.compact
-	end
-
-	def subtypes
-		s = []
-		self.keys.each {|k,v| s << k if v.type.class == Array}
-		s.compact
-	end
-
-	def options_for_subtype(field)
-		self.keys[field].type
-	end
-
-	def relation_keys_include?(key)
-		self.associations.map {|rel| true if key.to_sym == rel[0]}.reduce
-	end
-
+Bowtie.models.each do |mod|
+	mod.extend Bowtie::ClassMethods
 end

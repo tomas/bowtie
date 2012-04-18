@@ -22,6 +22,8 @@ module Bowtie
 
 	def self.create(model, params)
 		model.create(params)
+	rescue DataObjects::IntegrityError
+		model.new(params)
 	end
 
 	def self.get_associated(model, params)
@@ -77,9 +79,57 @@ module Bowtie
 
 	end
 
+	module ClassMethods
+
+		def primary_key
+			key.first.name
+		end
+
+		def model_associations
+			return [] if relationships.nil? or relationships.empty?
+			if relationships.first.is_a?(Array)
+				return relationships
+			else
+				h = {}
+				relationships.map {|r| h[r.name] = r }
+				return h
+			end
+		end
+
+		def field_names
+			self.properties.collect{|p| p.name }
+		end
+
+		def boolean_fields
+			self.properties.map{|a| a.name if a.class == DataMapper::Property::Boolean}.compact
+		end
+
+		def searchable_fields
+			self.properties.map{|a| a.name if a.class == DataMapper::Property::String}.compact
+		end
+
+		def subtypes
+			begin
+				self.validators.first.last.map{|a,b| b = {a.field_name => a.options[:set]} if a.class == DataMapper::Validate::WithinValidator}.compact
+			rescue NoMethodError
+				# puts ' -- dm-validations gem not included. Cannot check subtypes for class.'
+				[]
+			end
+		end
+
+		def options_for_subtype(field)
+			self.validators.first.last.map{|a| a.options[:set] if a.class == DataMapper::Validate::WithinValidator && a.field_name == field}.compact.reduce
+		end
+
+		def relation_keys_include?(property)
+			self.relationships.map {|rel| true if property.to_sym == rel[1].child_key.first.name}.reduce
+		end
+
+	end
+
 end
 
-class Object
+module DataMapper::Resource
 
 	def primary_key
 		send(self.class.primary_key)
@@ -91,50 +141,6 @@ class Object
 
 end
 
-class Class
-
-	def primary_key
-		key.first.name
-	end
-
-	def model_associations
-		return [] if relationships.nil? or relationships.empty?
-		if relationships.first.is_a?(Array)
-			return relationships
-		else
-			h = {}
-			relationships.map {|r| h[r.name] = r }
-			return h
-		end
-	end
-
-	def field_names
-		self.properties.collect{|p| p.name }
-	end
-
-	def boolean_fields
-		self.properties.map{|a| a.name if a.class == DataMapper::Property::Boolean}.compact
-	end
-
-	def searchable_fields
-		self.properties.map{|a| a.name if a.class == DataMapper::Property::String}.compact
-	end
-
-	def subtypes
-		begin
-			self.validators.first.last.map{|a,b| b = {a.field_name => a.options[:set]} if a.class == DataMapper::Validate::WithinValidator}.compact
-		rescue NoMethodError
-			# puts ' -- dm-validations gem not included. Cannot check subtypes for class.'
-			[]
-		end
-	end
-
-	def options_for_subtype(field)
-		self.validators.first.last.map{|a| a.options[:set] if a.class == DataMapper::Validate::WithinValidator && a.field_name == field}.compact.reduce
-	end
-
-	def relation_keys_include?(property)
-		self.relationships.map {|rel| true if property.to_sym == rel[1].child_key.first.name}.reduce
-	end
-
+Bowtie.models.each do |mod|
+	mod.extend Bowtie::ClassMethods
 end
