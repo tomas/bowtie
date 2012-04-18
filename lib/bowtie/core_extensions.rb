@@ -3,11 +3,7 @@
 
 begin
 
-	require 'active_support/inflections'
-
-	class String
-		include ActiveSupport::Inflections
-	end
+	require 'active_support/inflector'
 
 rescue
 
