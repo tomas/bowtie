@@ -5,7 +5,7 @@ begin
 
 	require 'active_support/inflector'
 
-rescue
+rescue LoadError
 
 	class String
 
