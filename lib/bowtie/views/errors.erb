@@ -4,7 +4,7 @@
 
 	<ul>
 	<% @resource.errors.each do |key, message| %>
-		<li><strong><%= key %></strong> <%= ":#{message}" if message %></li>
+		<li><strong><%= key %></strong><%= ": #{message}" if message %></li>
 	<% end %>
 	</ul>
 
