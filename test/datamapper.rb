@@ -78,4 +78,4 @@ rescue DataObjects::SyntaxError
 	DataMapper.auto_migrate!
 end
 
-DataMapper.finalize
+DataMapper.finalize if DataMapper.respond_to?(:finalize)
