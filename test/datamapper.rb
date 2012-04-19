@@ -77,3 +77,5 @@ begin
 rescue DataObjects::SyntaxError
 	DataMapper.auto_migrate!
 end
+
+DataMapper.finalize
