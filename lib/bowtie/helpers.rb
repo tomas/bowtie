@@ -11,7 +11,7 @@ module Bowtie
 		end
 
 		def action_name
-			current_model.pluralize
+			model.pluralize
 		end
 
 		def base_path
@@ -30,7 +30,7 @@ module Bowtie
 		def redirect(uri, *args)
 			super base_path + uri.downcase, *args
 		end
-		
+
 		def referer
 			URI.parse(@env['HTTP_REFERER']).path.sub("#{base_path}", '')
 		end
@@ -52,15 +52,13 @@ module Bowtie
 		end
 
 		def get_model_class(mod = params[:model])
-			mappings[mod] or halt(404, "Model not found.")
+			m = mappings[mod] or halt(404, "Model not found.")
+			m.extend(ClassMethods) unless m.respond_to?(:model_associations)
+			m
 		end
 
 		def model
 			@model ||= get_model_class
-		end
-
-		def current_model
-			model
 		end
 
 		def resource
@@ -73,7 +71,7 @@ module Bowtie
 			erb(name, {:layout => false}, *args)
 		end
 
-		def model_path(m = current_model)
+		def model_path(m = model)
 			string = m.name ||= m
 			linkable_path(string.to_s.pluralize.downcase)
 		end

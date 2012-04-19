@@ -128,21 +128,3 @@ module MongoMapper::Document
 	end
 
 end
-
-if Bowtie.models.empty? # models not loaded yet
-
-	module MongoMapper::Document
-
-		included do
-			extend Bowtie::ClassMethods
-		end
-
-	end
-
-else
-
-	Bowtie.models.each do |mod|
-		mod.extend Bowtie::ClassMethods
-	end
-
-end

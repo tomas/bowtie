@@ -135,22 +135,12 @@ module DataMapper::Resource
 		send(self.class.primary_key)
 	end
 
-	def to_json
-		attributes.to_json
-	end
+	unless defined?(:to_json)
 
-end
+		def to_json
+			attributes.to_json
+		end
 
-if Bowtie.models.empty? # models not loaded yet
-
-	class Class # need to figure out how to extend *only* DM models
-		include Bowtie::ClassMethods
-	end
-
-else
-
-	Bowtie.models.each do |mod|
-		mod.extend Bowtie::ClassMethods
 	end
 
 end
