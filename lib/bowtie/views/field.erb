@@ -1,21 +1,38 @@
 <%=
 
-	name = @p
-	begin
-		value = @resource.send(@p)
-	rescue NoMethodError
-		value = ''
-	end
+  name = @p
+  begin
+    value = @resource.send(@p)
+  rescue NoMethodError
+    value = ''
+  end
 
-	html =''
+  html =''
 
-	case value.class.name
-		when "TrueClass", "FalseClass", /Boolean/
-			checked = value == true ? 'checked="checked"' : ''
-			html += '<input name="resource['+name.to_s+']" type="checkbox" '+checked+' />'
-		else
-			html += '<input class="string" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
-	end
-	html
+  if ["TrueClass", "FalseClass"].include? value.class.name
+    checked = value == true ? 'checked="checked"' : ''
+    html += '<input name="resource['+name.to_s+']" type="checkbox" '+checked+' />'
+
+  elsif name =~ /_id$/
+    relation_name = name.to_s.gsub(/_id$/, '')
+
+    if @resource.model.relationships.named? relation_name
+
+      model = Object.const_get relation_name.split('_').map(&:capitalize).join
+      caption_format = model.instance_methods.include?(:to_caption) ? "inst.id.to_s + ' - ' + inst.to_caption.to_s" : "inst.id.to_s"
+      options = model.all.map do |inst|
+        "<option value=\"#{inst.id}\" #{'selected="selected"' if value == inst.id}>#{eval caption_format}</option>"
+      end
+
+      html += """<select name=\"resource[#{name.to_s}]\">
+                  #{options.join}
+                 </select>"""
+    else
+      return
+    end
+  else
+    html += '<input class="string" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
+  end
+  html
 
  %>
