@@ -52,6 +52,27 @@ Additionally you need to make sure that all models have been loaded because Rail
         require path
     end
 
+### Simple relations in forms
+Bowtie can resolve simple relations between models and presents the
+ids in a dropdown.
+
+For a nice data presentation, add a method called `to_option_text` in
+the referred model.
+
+    class User
+      ...
+      def to_option_text
+        "#{id} - #{first_name} #{last_name}"
+      end
+
+      has n, :posts
+    end
+
+    class Post
+      ...
+      belongs_to :user
+    end
+
 ### Try it out!
 Now you can go to /admin in your app's path and try out Bowtie using your user/pass combination. If not set, it defaults to admin/bowtie.
 
