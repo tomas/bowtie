@@ -16,7 +16,7 @@
   elsif name =~ /_id$/
     relation_name = name.to_s.gsub(/_id$/, '')
 
-    if @resource.model.relationships.named? relation_name
+    if @resource.model.relation_keys_include? relation_name
 
       model = Object.const_get relation_name.split('_').map(&:capitalize).join
       caption_format = model.instance_methods.include?(:to_caption) ? "inst.id.to_s + ' - ' + inst.to_caption.to_s" : "inst.id.to_s"
