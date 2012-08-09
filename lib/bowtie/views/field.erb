@@ -19,14 +19,7 @@
     if @resource.model.relation_keys_include? relation_name
 
       model = Object.const_get relation_name.split('_').map(&:capitalize).join
-      text_format = model.instance_methods.include?(:to_option_text) ? "inst.id.to_s + ' - ' + inst.to_option_text.to_s" : "inst.id.to_s"
-      options = model.all.map do |inst|
-        "<option value=\"#{inst.id}\" #{'selected="selected"' if value == inst.id}>#{eval text_format}</option>"
-      end
-
-      html += """<select name=\"resource[#{name.to_s}]\">
-                  #{options.join}
-                 </select>"""
+      html += render_relationship_in_select model, name, value
     else
       return
     end
