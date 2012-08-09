@@ -109,21 +109,21 @@ module Bowtie
 		end
 
     def render_relationship_in_select(model, property, value=nil)
-      text_format = if model.instance_methods.include?(:to_option_text) 
-                      "inst.id.to_s + ' - ' + inst.to_option_text.to_s"
-                    else
-                      "inst.id.to_s"
-                    end
+      text = if model.instance_methods.include?(:to_option_text)
+               :to_option_text
+             else
+               :id
+             end
 
       options = model.all.map do |inst|
-        "<option value=\"#{inst.id}\" #{'selected="selected"' if value == inst.id}>#{eval text_format}</option>"
+        "<option value=\"#{inst.id}\" #{'selected="selected"' if value == inst.id}>#{inst.send text}</option>"
       end
 
       html = """<select name=\"resource[#{property.to_s}]\">
-                  #{options.join}
+      #{options.join}
                 </select>"""
     end
 
-	end
+  end
 
 end
