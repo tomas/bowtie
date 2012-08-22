@@ -119,7 +119,7 @@ module Bowtie
         "<option value=\"#{inst.id}\" #{'selected="selected"' if value == inst.id}>#{inst.send text}</option>"
       end
 
-      html = """<select name=\"resource[#{property.to_s}]\" class=\"chzn-select\">
+      html = """<select data-placeholder=\"Select one...\" name=\"resource[#{property.to_s}]\" class=\"chzn-select\">
              #{options.join}
             </select>"""
     end
