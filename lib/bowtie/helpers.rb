@@ -115,11 +115,12 @@ module Bowtie
                :id
              end
 
-      options = model.all.map do |inst|
+      options = ['<option value=""></option>']
+      options += model.all.map do |inst|
         "<option value=\"#{inst.id}\" #{'selected="selected"' if value == inst.id}>#{inst.send text}</option>"
       end
 
-      html = """<select data-placeholder=\"Select one...\" name=\"resource[#{property.to_s}]\" class=\"chzn-select\">
+      html = """<select data-placeholder=\"Select...\" name=\"resource[#{property.to_s}]\" class=\"chzn-select\">
              #{options.join}
             </select>"""
     end
