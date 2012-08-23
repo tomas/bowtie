@@ -3,7 +3,7 @@ module Bowtie
 
     attr_reader :excluded_models
 
-    def excluded_models= models
+    def excluded_models= models=[]
       raise "Expeting an Array of models" unless models.kind_of? Array
 
       @excluded_models = models
