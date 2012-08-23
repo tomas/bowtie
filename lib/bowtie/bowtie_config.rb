@@ -23,11 +23,10 @@ module Bowtie
   module Models
 
     module Extensions
-      # Add your model extensions here
+      # Add your model extensions under this namespace
       # Example:
       #   module Bowtie::Models::Extensions
       #     module User
-      #       include BasicExtension
       #       def to_option_text
       #         ..
       #       end
