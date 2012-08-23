@@ -27,8 +27,19 @@ module Bowtie
       # Example:
       #   module Bowtie::Models::Extensions
       #     module User
+      #       include BasicExtension
       #       def to_option_text
       #         ..
+      #       end
+      #
+      #       module ClassMethods
+      #         def self.excluded_fields
+      #           [:encrypted_password]
+      #         end
+      #       end
+      #
+      #       def self.included base
+      #         base.extend ClassMethods
       #       end
       #     end
       #   end

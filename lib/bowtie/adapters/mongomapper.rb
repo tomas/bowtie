@@ -89,7 +89,7 @@ module Bowtie
 		end
 
 		def field_names
-			self.keys.keys.collect { |f| f.to_sym }
+			self.keys.keys.collect { |f| f.to_sym } - self.excluded_fields
 		end
 
 		def boolean_fields

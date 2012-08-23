@@ -97,7 +97,7 @@ module Bowtie
     end
 
     def field_names
-      self.properties.collect{|p| p.name }
+      self.properties.collect{|p| p.name } - self.excluded_fields
     end
 
     def boolean_fields
