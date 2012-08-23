@@ -52,25 +52,79 @@ Additionally you need to make sure that all models have been loaded because Rail
         require path
     end
 
-### Simple relations in forms
+### Customizing Bowtie
+The bowtie customization can be achived through Bowtie::Models::Extensions.
+You only need to add a module with the same name of the model.
+
+`model/database.rb`
+
+    class User
+      include DataMapper::Resource
+      ...
+    end
+
+`my_bowtie_customization.rb`
+
+    module Bowtie::Models::Extensions::User
+      ...
+    end
+
+Example explanation: Bowtie will include and extend the User model
+with Bowtie::Models::Extensions::User on runtime.
+
+For this customization you must require the bowtie customization after
+requiring the bowtie gem.
+
+    require 'my_app' # models are loaded
+    require 'bowtie'
+    require 'my_bowtie_customization'
+
+    map "/admin" do
+      BOWTIE_AUTH = {:user => 'admin', :pass => '12345'}
+      run Bowtie::Admin
+    end
+
+    map '/' do
+      run MyApp
+    end
+
+
 Bowtie can resolve simple relations between models and presents the
 ids in a dropdown.
 
-For a nice data presentation, add a method called `to_option_text` in
-the referred model.
+For a nice data presentation, add a method called `to_option_text` in the referred model.
 
-    class User
+`database.rb`
+
+    class Comment
       ...
-      def to_option_text
-        "#{id} - #{first_name} #{last_name}"
-      end
-
-      has n, :posts
+      belongs_to :post
     end
 
     class Post
       ...
-      belongs_to :user
+      has n, :comments
+    end
+
+`my_bowtie_customization.rb`
+
+    module Bowtie::Models::Extensions::Post
+      def to_option_text
+        "#{id} - #{name}"
+      end
+    end
+
+Model fields can be excluded. The excluded fields will not be shown by
+bowtie.
+
+`my_bowtie_customization.rb`
+
+    module Bowtie::Models::Extensions::User
+      module ClassMethods
+        def excluded_fields
+          [:encrypted_password]
+        end
+      end
     end
 
 ### Try it out!
