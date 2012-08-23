@@ -18,7 +18,7 @@
 
     if @resource.model.relation_keys_include? relation_name
 
-      model = Object.const_get relation_name.split('_').map(&:capitalize).join
+      model = get_model_class relation_name.pluralize
       html += render_relationship_in_select model, name, value
     else
       return

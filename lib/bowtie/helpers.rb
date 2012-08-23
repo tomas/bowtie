@@ -40,6 +40,13 @@ module Bowtie
 		end
 
 		# models, resources
+    def include_extension_to_model model
+      if ::Bowtie::Models::Extensions.const_defined?(model.to_s, false) && !model.include?(::Bowtie::Models::Extensions.const_get(model.to_s, false))
+        model.send :include, ::Bowtie::Models::Extensions.const_get(model.to_s, false)
+      else
+        model
+      end
+    end
 
 		def mappings
 			@mappings ||= get_mappings
@@ -52,9 +59,9 @@ module Bowtie
 		end
 
 		def get_model_class(mod = params[:model])
-			m = mappings[mod] or halt(404, "Model not found.")
+			m = mappings[mod] or halt(404, "Model #{mod} not found.")
 			m.extend(ClassMethods) unless m.respond_to?(:model_associations)
-			m
+			include_extension_to_model m
 		end
 
 		def model

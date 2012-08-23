@@ -3,6 +3,12 @@ module Bowtie
 
     attr_reader :excluded_models
 
+    ##
+    # Models to exclude from Bowtie.models
+    # Recives an array of Classes
+    #
+    # Example: exclude_models = [UserPosts, History]
+    #
     def excluded_models= models=[]
       raise "Expeting an Array of models" unless models.kind_of? Array
 
@@ -12,5 +18,21 @@ module Bowtie
 
   def self.config
     @config ||= Config.new
+  end
+
+  module Models
+
+    module Extensions
+      # Add your model extensions here
+      # Example:
+      #   module Bowtie::Models::Extensions
+      #     module User
+      #       def to_option_text
+      #         ..
+      #       end
+      #     end
+      #   end
+    end
+
   end
 end
