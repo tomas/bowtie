@@ -1,7 +1,8 @@
 module Bowtie
 
 	def self.models
-		models = MongoMapper::Document.descendants.to_a.uniq
+		models = MongoMapper::Document.descendants.to_a.uniq -
+      Bowtie.config.excluded_models
 #		models.each {|m| models = models + m.subclasses}
 #		models
 	end
