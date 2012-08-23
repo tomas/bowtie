@@ -1,7 +1,7 @@
 module Bowtie
 
   def self.models
-    DataMapper::Model.descendants.to_a
+    DataMapper::Model.descendants.to_a - Bowtie.config.excluded_models
   end
 
   def self.search(model, q, page)
