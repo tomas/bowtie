@@ -70,7 +70,8 @@ module Bowtie
   def self.adapter_fields_registry
     {
       "DataMapper::Property::Text" => "textarea",
-      "DataMapper::Property::String" => "text"
+      "DataMapper::Property::String" => "text",
+      "DataMapper::Property::Boolean" => "checkbox"
     }
   end
 
