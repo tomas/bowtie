@@ -30,9 +30,9 @@ module Bowtie
     # Map between property class name and html field type
     #
     def fields_registry= hash={}
-      raise "Expecting a Hash" unless models.kind_of? Hash
+      raise "Expecting a Hash" unless hash.kind_of? Hash
 
-      @fields_registry = hash
+      @fields_registry.merge! hash
     end
 
   end
