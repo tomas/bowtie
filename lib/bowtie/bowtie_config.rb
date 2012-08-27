@@ -11,7 +11,7 @@ module Bowtie
     }
 
     def initialize
-      @fields_registry = FIELDS_REGISTRY
+      @fields_registry = FIELDS_REGISTRY.merge Bowtie.adapter_fields_registry
     end
 
     ##

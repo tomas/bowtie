@@ -329,20 +329,23 @@ form.resource small{
 	color: #ccc;
 }
 form.resource input,
-form.resource select{
+form.resource select,
+form.resource textarea{
 	font-size: .9em;
 	color: #666;
 	padding: 2px 5px;
 }
 
-form.resource input[type=text]{
+form.resource input[type=text],
+form.resource textarea{
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border: 1px solid #999;
 	width: 300px;
 }
 
-form.resource input:focus[type=text]{
+form.resource input:focus[type=text]
+form.resource textarea:focus{
 	border-color: #333;
 }
 

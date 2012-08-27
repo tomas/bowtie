@@ -20,18 +20,15 @@
 
   else
 
-    case Bowtie.config.fields_registry[@resource.send name]
+    case Bowtie.config.fields_registry[@resource.model.class_of(name).name]
     when "checkbox"
       checked = value == true ? 'checked="checked"' : ''
       html += '<input name="resource['+name.to_s+']" type="checkbox" '+checked+' />'
-    when "textaera"
-      html += '<textarea class="text" name="resource['+name.to_s+']"></textarea>'
+    when "textarea"
+      html += '<textarea class="text" cols="40" name="resource['+name.to_s+']"></textarea>'
     when "file"
       html += '<input type="file" name="resource['+name.to_s+']" size="chars">'
     else
-      html += "#{Bowtie.config.fields_registry.inspect}"
-      html += "#{value.inspect}"
-      html += "<p>#{Bowtie.config.fields_registry[value.class.name]}</p>"
       html += '<input class="string" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
     end
 

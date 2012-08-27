@@ -66,6 +66,14 @@ module Bowtie
     end
   end
 
+  # The property classes that the ORM
+  def self.adapter_fields_registry
+    {
+      "DataMapper::Property::Text" => "textarea",
+      "DataMapper::Property::String" => "text"
+    }
+  end
+
   module Helpers
 
     def total_entries(resources)
@@ -127,6 +135,10 @@ module Bowtie
 
     def excluded_fields
       []
+    end
+
+    def class_of property
+      self.properties[property.to_sym].class
     end
 
   end
