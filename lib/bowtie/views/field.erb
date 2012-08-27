@@ -24,6 +24,8 @@
     when "checkbox"
       checked = value == true ? 'checked="checked"' : ''
       html += '<input name="resource['+name.to_s+']" type="checkbox" '+checked+' />'
+    when "textaera"
+      html += '<textarea class="text" name="resource['+name.to_s+']"></textarea>'
     else
       html += '<input class="string" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
     end
