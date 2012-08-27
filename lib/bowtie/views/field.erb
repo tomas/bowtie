@@ -20,7 +20,8 @@
 
   else
 
-    case Bowtie.config.fields_registry[@resource.model.class_of(name).name]
+    case Bowtie.config.fields_registry[get_resource_property_class(@resource, name).name]
+
     when "checkbox"
       checked = value == true ? 'checked="checked"' : ''
       html += '<input name="resource['+name.to_s+']" type="checkbox" '+checked+' />'

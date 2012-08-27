@@ -72,6 +72,15 @@ module Bowtie
 			Bowtie.get_one(model, params[:id]) or halt(404, 'Resource not found!')
 		end
 
+    def get_resource_property_class resource, property
+      model = resource.model
+      if model.properties_field_names.include? property
+        model.class_of property
+      else
+        resource.send(property).class
+      end
+    end
+
 		# views, paths
 
 		def partial(name, *args)

@@ -56,6 +56,12 @@ module Bowtie
       #         def self.excluded_fields
       #           [:encrypted_password]
       #         end
+      #
+      #         def self.extra_fields
+      #           # Example exposing attachment method
+      #           # added by Paperclip
+      #           [:attachment]
+      #         end
       #       end
       #
       #       def self.included base
