@@ -125,6 +125,10 @@ module Bowtie
       self.relationships.named? property.to_sym
     end
 
+    def excluded_fields
+      []
+    end
+
   end
 
 end

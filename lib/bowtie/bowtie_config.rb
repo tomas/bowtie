@@ -1,7 +1,18 @@
 module Bowtie
   class Config
 
-    attr_reader :excluded_models
+    attr_reader :excluded_models, :fields_registry
+
+    FIELDS_REGISTRY = {
+      "TrueClass" => "checkbox",
+      "FalseClass" => "checkbox",
+      "String" => "text",
+      "Text" => "textarea"
+    }
+
+    def initialize
+      @fields_registry = FIELDS_REGISTRY
+    end
 
     ##
     # Models to exclude from Bowtie.models
@@ -14,6 +25,16 @@ module Bowtie
 
       @excluded_models = models
     end
+
+    ##
+    # Map between property class name and html field type
+    #
+    def fields_registry= hash={}
+      raise "Expecting a Hash" unless models.kind_of? Hash
+
+      @fields_registry = hash
+    end
+
   end
 
   def self.config

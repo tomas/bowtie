@@ -118,6 +118,10 @@ module Bowtie
 			self.associations.map {|rel| true if key.to_sym == rel[0]}.reduce
 		end
 
+    def excluded_fields
+      []
+    end
+
 	end
 
 end
