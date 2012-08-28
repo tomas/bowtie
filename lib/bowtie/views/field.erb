@@ -26,7 +26,7 @@
       checked = value == true ? 'checked="checked"' : ''
       html += '<input name="resource['+name.to_s+']" type="checkbox" '+checked+' />'
     when "textarea"
-      html += '<textarea class="text" cols="40" name="resource['+name.to_s+']"></textarea>'
+      html += '<textarea class="text" cols="40" name="resource['+name.to_s+']">'+value.to_s+'</textarea>'
     when "file"
       html += '<input type="file" name="resource['+name.to_s+']" size="chars">'
     else
