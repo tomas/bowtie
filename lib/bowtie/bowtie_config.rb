@@ -7,7 +7,8 @@ module Bowtie
       "TrueClass" => "checkbox",
       "FalseClass" => "checkbox",
       "String" => "text",
-      "Text" => "textarea"
+      "Text" => "textarea",
+      "DateTime" => "datetime"
     }
 
     def initialize
