@@ -144,6 +144,10 @@ module Bowtie
       []
     end
 
+    def extra_fields
+      []
+    end
+
     def class_of property
       self.properties[property.to_sym].class
     end
