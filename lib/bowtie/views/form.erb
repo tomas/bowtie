@@ -1,7 +1,7 @@
 <% if @resource.new? %>
-	<form class="resource" method="post" action="<%= model_path(@resource.class) %>">
+	<form class="resource" method="post"  enctype="multipart/form-data" action="<%= model_path(@resource.class) %>">
 <% else %>
-	<form class="resource" method="post" action="<%= model_path(@resource.class) %>/<%= @resource.id %>">
+	<form class="resource" method="post"  enctype="multipart/form-data" action="<%= model_path(@resource.class) %>/<%= @resource.id %>">
 	<input type="hidden" name="_method" value="put">
 <% end %>
 
