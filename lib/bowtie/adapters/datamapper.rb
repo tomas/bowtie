@@ -72,7 +72,8 @@ module Bowtie
       "DataMapper::Property::Text" => "textarea",
       "DataMapper::Property::String" => "text",
       "DataMapper::Property::Boolean" => "checkbox",
-      "DataMapper::Property::Time" => "datetime"
+      "DataMapper::Property::DateTime" => "datetime",
+      "DataMapper::Property::Time" => "time"
     }
   end
 

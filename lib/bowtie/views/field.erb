@@ -33,7 +33,10 @@
     when "file"
       html += '<input type="file" name="resource['+name.to_s+']" size="chars">'
     when "datetime"
-      html += '<input class="date-time" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
+      html += '<input class="date-time-pkr" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
+    when "time"
+      html += '<input class="time-pkr" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
+
     else
       html += '<input class="string" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
     end
