@@ -32,6 +32,8 @@
       html += '<textarea class="text" cols="40" name="resource['+name.to_s+']">'+value.to_s+'</textarea>'
     when "file"
       html += '<input type="file" name="resource['+name.to_s+']" size="chars">'
+    when "date"
+      html += '<input class="date-pkr" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
     when "datetime"
       html += '<input class="date-time-pkr" type="text" name="resource['+name.to_s+']" value="'+value.to_s+'" />'
     when "time"
