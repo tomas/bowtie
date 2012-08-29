@@ -142,11 +142,11 @@ module Bowtie
     end
 
     def options_for_property(name)
-      self.send(name.to_sym).options[:set]
+      self.send(name.to_sym).options[:set] if self.send(name.to_sym).respond_to? :options
     end
 
     def property_has_options?(name)
-      !!self.send(name.to_sym).options[:set]
+      !!self.send(name.to_sym).options[:set] if self.send(name.to_sym).respond_to? :options
     end
 
     def excluded_fields
