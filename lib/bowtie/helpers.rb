@@ -141,6 +141,22 @@ module Bowtie
             </select>"""
     end
 
+    def render_property_options_in_select(model, property, value=nil)
+      options_set = model.send(property.to_sym).options[:set]
+
+      options = ['<option value=""></option>']
+
+      options += options_set.collect do |value|
+        "<option value=\"#{value.to_s}\" #{'selected="selected"' if value == value.to_s}>#{value.to_s}</option>"
+      end
+
+      html = """<select data-placeholder=\"Select...\" name=\"resource[#{property.to_s}]\" class=\"chzn-select\">
+             #{options.join}
+            </select>"""
+
+    end
+
+
   end
 
 end

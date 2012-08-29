@@ -141,6 +141,14 @@ module Bowtie
       self.relationships.named? property.to_sym
     end
 
+    def options_for_property(name)
+      self.send(name.to_sym).options[:set]
+    end
+
+    def property_has_options?(name)
+      !!self.send(name.to_sym).options[:set]
+    end
+
     def excluded_fields
       []
     end

@@ -118,7 +118,20 @@ module Bowtie
 			self.associations.map {|rel| true if key.to_sym == rel[0]}.reduce
 		end
 
+    def options_for_property(name)
+      # not implemented
+    end
+
+    def property_has_options?(name)
+      # not implemented
+    end
+
+
     def excluded_fields
+      []
+    end
+
+    def extra_fields
       []
     end
 

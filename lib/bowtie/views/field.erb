@@ -18,6 +18,9 @@
       html += render_relationship_in_select model, name, value
     end
 
+  elsif @resource.model.property_has_options?(name)
+    html += render_property_options_in_select @resource.model, name, value
+
   else
 
     case Bowtie.config.fields_registry[get_resource_property_class(@resource, name).name]
