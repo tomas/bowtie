@@ -2,6 +2,7 @@ module Bowtie
   class Config
 
     attr_reader :excluded_models, :fields_registry
+    attr_accessor :footer
 
     FIELDS_REGISTRY = {
       "TrueClass" => "checkbox",
@@ -14,6 +15,7 @@ module Bowtie
     def initialize
       @fields_registry = FIELDS_REGISTRY.merge Bowtie.adapter_fields_registry
       @excluded_models = []
+      @footer = {href: '', text: ''}
     end
 
     ##

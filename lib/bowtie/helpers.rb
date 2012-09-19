@@ -113,6 +113,10 @@ module Bowtie
 			"<th title='#{assoc.class.name.to_s[/.*::(.*)$/, 1]}' class='rel-col #{rel_name}-col'>#{rel_name.to_s.titleize}</th>"
 		end
 
+    def footer_link
+      "<p><a href=\"#{Bowtie.config.footer[:href]}\">#{Bowtie.config.footer[:text]}</a></p>"
+    end
+
 		def render_assoc_row(r, rel_name, assoc)
 			html = "<td class='rel-col #{rel_name.to_s}-col'>"
 			html += "<a href='#{model_path}/#{r.id}/#{rel_name.to_s}'>"

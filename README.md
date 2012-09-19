@@ -131,6 +131,24 @@ bowtie.
       end
     end
 
+Model exclusion.
+
+`my_bowtie_customization.rb`
+
+    Bowtie.config.excluded_models = [UserPost, UserPayment]
+
+Registering new clases for input types.
+
+`my_bowtie_customization`
+
+    Bowtie.config.fields_registry = {"Paperclip::Attachment" => "file", "String" => "file"}
+
+For adding your link to the footer.
+
+`my_bowtie_customization.rb`
+
+    Bowtie.config.footer = { href: 'http://....com', text: 'Footer Text' }
+
 ### Try it out!
 Now you can go to /admin in your app's path and try out Bowtie using your user/pass combination. If not set, it defaults to admin/bowtie.
 
