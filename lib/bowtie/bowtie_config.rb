@@ -13,6 +13,7 @@ module Bowtie
 
     def initialize
       @fields_registry = FIELDS_REGISTRY.merge Bowtie.adapter_fields_registry
+      @excluded_models = []
     end
 
     ##
