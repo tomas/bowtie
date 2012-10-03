@@ -1,7 +1,8 @@
 module Bowtie
 
 	def self.models
-		models = MongoMapper::Document.descendants.to_a.uniq
+		models = MongoMapper::Document.descendants.to_a.uniq -
+      Bowtie.config.excluded_models
 #		models.each {|m| models = models + m.subclasses}
 #		models
 	end
@@ -88,7 +89,7 @@ module Bowtie
 		end
 
 		def field_names
-			self.keys.keys.collect { |f| f.to_sym }
+			self.keys.keys.collect { |f| f.to_sym } - self.excluded_fields
 		end
 
 		def boolean_fields
@@ -116,6 +117,23 @@ module Bowtie
 		def relation_keys_include?(key)
 			self.associations.map {|rel| true if key.to_sym == rel[0]}.reduce
 		end
+
+    def options_for_property(name)
+      # not implemented
+    end
+
+    def property_has_options?(name)
+      # not implemented
+    end
+
+
+    def excluded_fields
+      []
+    end
+
+    def extra_fields
+      []
+    end
 
 	end
 

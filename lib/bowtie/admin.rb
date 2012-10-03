@@ -74,11 +74,13 @@ module Bowtie
 
 			if res.is_a?(Array)
 				@model = res.first.class
+			  include_extension_to_model @model
 				@model.extend(ClassMethods) unless @model.respond_to?(:model_associations)
 				@resources = Bowtie.add_paging(res, params[:page])
 				erb :index
 			else
 				@model = res.class
+			  include_extension_to_model @model
 				@model.extend(ClassMethods) unless @model.respond_to?(:model_associations)
 				@resource = res
 				erb :show

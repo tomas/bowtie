@@ -40,6 +40,13 @@ module Bowtie
 		end
 
 		# models, resources
+    def include_extension_to_model model
+      if ::Bowtie::Models::Extensions.const_defined?(model.to_s, false) && !model.include?(::Bowtie::Models::Extensions.const_get(model.to_s, false))
+        model.send :include, ::Bowtie::Models::Extensions.const_get(model.to_s, false)
+      else
+        model
+      end
+    end
 
 		def mappings
 			@mappings ||= get_mappings
@@ -52,9 +59,9 @@ module Bowtie
 		end
 
 		def get_model_class(mod = params[:model])
-			m = mappings[mod] or halt(404, "Model not found.")
+			m = mappings[mod] or halt(404, "Model #{mod} not found.")
 			m.extend(ClassMethods) unless m.respond_to?(:model_associations)
-			m
+			include_extension_to_model m
 		end
 
 		def model
@@ -64,6 +71,15 @@ module Bowtie
 		def resource
 			Bowtie.get_one(model, params[:id]) or halt(404, 'Resource not found!')
 		end
+
+    def get_resource_property_class resource, property
+      model = resource.model
+      if model.properties_field_names.include? property
+        model.class_of property
+      else
+        resource.send(property).class
+      end
+    end
 
 		# views, paths
 
@@ -97,6 +113,10 @@ module Bowtie
 			"<th title='#{assoc.class.name.to_s[/.*::(.*)$/, 1]}' class='rel-col #{rel_name}-col'>#{rel_name.to_s.titleize}</th>"
 		end
 
+    def footer_link
+      "<p><a href=\"#{Bowtie.config.footer[:href]}\">#{Bowtie.config.footer[:text]}</a></p>"
+    end
+
 		def render_assoc_row(r, rel_name, assoc)
 			html = "<td class='rel-col #{rel_name.to_s}-col'>"
 			html += "<a href='#{model_path}/#{r.id}/#{rel_name.to_s}'>"
@@ -108,6 +128,39 @@ module Bowtie
 			html += "</a></td>"
 		end
 
-	end
+    def render_relationship_in_select(model, property, value=nil)
+      text = if model.instance_methods.include?(:to_option_text)
+               :to_option_text
+             else
+               :id
+             end
+
+      options = ['<option value=""></option>']
+      options += model.all.map do |inst|
+        "<option value=\"#{inst.id}\" #{'selected="selected"' if value == inst.id}>#{inst.send text}</option>"
+      end
+
+      html = """<select data-placeholder=\"Select...\" name=\"resource[#{property.to_s}]\" class=\"chzn-select\">
+             #{options.join}
+            </select>"""
+    end
+
+    def render_property_options_in_select(model, property, value=nil)
+      options_set = model.send(property.to_sym).options[:set]
+
+      options = ['<option value=""></option>']
+
+      options += options_set.collect do |value|
+        "<option value=\"#{value.to_s}\" #{'selected="selected"' if value == value.to_s}>#{value.to_s}</option>"
+      end
+
+      html = """<select data-placeholder=\"Select...\" name=\"resource[#{property.to_s}]\" class=\"chzn-select\">
+             #{options.join}
+            </select>"""
+
+    end
+
+
+  end
 
 end

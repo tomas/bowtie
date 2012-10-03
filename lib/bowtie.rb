@@ -15,4 +15,4 @@ else
 	raise Gem::LoadError, "No adapters found. You need to require MongoMapper (mongo_mapper) or DataMapper (dm-core) before requiring Bowtie."
 end
 
-%w(sinatra helpers core_extensions admin).each {|lib| require lib}
+%w(sinatra helpers core_extensions bowtie_config admin).each {|lib| require lib}
