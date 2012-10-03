@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version = "0.5.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Tomas Pollak", "leizzer"]
+  s.authors = ["Tomas Pollak"]
   s.email = %q{tomas@forkhq.com}
   s.date = %q{2012-04-18}
   s.description = %q{Simple admin scaffold for MongoMapper and DataMapper models.}
